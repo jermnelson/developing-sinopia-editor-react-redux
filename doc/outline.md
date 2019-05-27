@@ -1,7 +1,7 @@
 # Introduction
 ## Background of Sinopia
 Funded by the Mellon Foundation as part of the  LD4P (Linked Data for Production) grant,
-[Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is a collaborative linked-data 
+[Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is a cloud-based collaborative linked-data 
 cataloging environment that could be used in a production environment. The Sinopia project's primary
 software development team are members of the Stanford University Libraries with Michelle Futornick is
 project owner who directs the priorities and communicates the user's needs and requirements to the 
@@ -23,12 +23,26 @@ storytime meeting where challenges and issues that usually required the project 
 that are then incorporated into the sprint execution.  
 
 At the start of the Sinopia project, the decision was made to build the linked data editor based on previous
-development work done by the Library of Congress in the creation of their [BIBFRAME Editor][BFE] and supporting
-projects.      
+development work done by the Library of Congress in the creation of their [BIBFRAME Editor][BFE] or BFE along
+with supporting projects like the [BIBFRAME Profile Editor](https://github.com/lcnetdev/profile-edit) and 
+[Verso](https://github.com/lcnetdev/verso). The Library of Congress catalogers have been using the BFE to 
+cataloging books and other materials for specific workflows related to the Library of Congress infrastructure. 
+Christine Harlow, now at Temple University, created Sinopia's architecture for deploying first a forked 
+version of the Library of Congress BIBFRAME Profile in [Amazon Web Services](https://aws.amazon.com/) (AWS) with
+the Linked Data Editor to follow. Because the initial BFE codebase was a monolithic Javascript module and the
+BFE lacked any unit or integration tests, it was decided that a hard fork of the BFE code base for Sinopa Linked 
+Data Editor was necessary in order to address design and implementation shortcomings present in the BFE. In 
+addition, a new backend architecture was necessary that leveraged AWS services like 
+[Cognito](https://aws.amazon.com/cognito/) a user authentication service and to host an instance of 
+[Trellis](https://www.trellisldp.org/), a linked-data platform that allows the use of a Postgres relational 
+database to store the output of the Linked Data Editor.   
 
-Two partners in the Sinopia project provide an important service called Questions Authorities (QA), a joint
-project of Cornell University and the University of Iowa. QA is an API service that queries Lucene indexes
-of both RDF and non-RDF datastores and returns JSON data of the results.  
+Two partners in the Sinopia project provide an important service called [Questions Authorities](https://github.com/samvera/questioning_authority) 
+(QA), a joint project of Cornell University and the University of Iowa. QA is an API service that queries Lucene 
+indexes of both RDF and non-RDF datastores and returns JSON data of the results. This service provides an intermediary 
+source of lookup data for the Library of Congress [subject](http://id.loc.gov/authorities/subjects.html) and 
+[name](http://id.loc.gov/authorities/names.html) authorities, the Getty Linked 
+Data [vocabularies](http://www.getty.edu/research/tools/vocabularies/lod/) and [ShareVDE](http://www.share-vde.org/).
 
 ## Functional Javascript 
 Within the programming community, the ubiquity of Javascript as the default programming language for 
@@ -38,19 +52,34 @@ years with the introduction of such Javascript libraries as [JQuery][JQUERY] and
 supported technologies, Javascript has morphed into a server-side language with the emergence of the [Node.js][NODE]
 ecosystem.
 
-Sinopia is developing using ECMAScript 6 features and conventions that is then transplained into
-Javascript using [Babel][BABEL].  
-
-
+Sinopia uses ECMAScriptfeatures and conventions that is then converted into Javascript using the [Babel][BABEL] 
+compiler. ECMAScript 6 features used in Sinopia include class declarations such  `class Input {...}`, importing of
+Javascript modules like `import Input from './Input` and to support the import, using the export feature like 
+`export const Input`. Because Sinopia's Linked Data Editor communicates in an asynchronous fashion with the 
+Sinopia server back-end, the ECMAScript 7 and 8 features like Promises with `async` and `await` keywords are used
+in the code. Finally, Sinopia extensively uses the ECMAScript spread operator as well as the arrow function syntax
+`() => {}` throughout the code base.
 
 Javascript supports multiple programming paradigms like imperative, object-oriented, and 
 in the past ten years, the functional programming approach. The popularity of building functional [React][REACT] 
 and [Redux][REDUX] code for web browser and native user interfaces. Javascript built-in `map` and `reduce` 
 operators along with support for currying and other functional-friendly constructs like the `=>` arrow functional 
-form. The key insight in writing functional javascript is focusing on functions with minimal side-effects and
+form. The key insight in writing functional Javascript is focusing on functions with minimal side-effects and
 deterministic expectations that given a set of inputs, the function will return a set of outputs.  
 
-For example,   
+For example, a traditional Javascript function is declared using the `function` keyword:
+```javascript
+function AddTwo (x,y) {
+  return x+y;
+}```
+
+while a more functional ECMAScript using the arrow functional form looks like:
+```javascript
+AddTwo = (x,y) => {
+  return x+y
+}``` 
+
+  
 
 ## Resource Templates and Profiles
 The Library of Congress's [Bibframe Editor][BFE] is a BIBFRAME-focused linked-data editor that was an 
