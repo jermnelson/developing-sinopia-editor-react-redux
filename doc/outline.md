@@ -74,7 +74,7 @@ function AddTwo (x,y) {
 }
 ```
 
-while a more functional ECMAScript using the `const` keyword and arrow functional form looks like:
+A more functional ECMAScript using the `const` keyword and arrow functional form looks like:
 
 ```javascript
 const AddTwo = (x,y) => {
@@ -82,18 +82,93 @@ const AddTwo = (x,y) => {
 }
 ``` 
 
-  
 
 ## Resource Templates and Profiles
 The Library of Congress's [Bibframe Editor][BFE] is a BIBFRAME-focused linked-data editor that was an 
-important source of inspiration for Sinopia, with the intention to do a LD4P for of BFE but because of the
-Javascript code organization and lack of any unit or integration tests, Sinopia ended up being implemented
-in a more-modern and decomposed manner that allowed for modern testing and better distributed and decomposed
-into React components with Redux state management. 
+important source of inspiration for Sinopia. To support a wide range of cataloging use cases, the BFE 
+followed a two-part strategy where a user first creates a JSON Profile containing one or more Resource 
+Templates in the BIBFRAME Profile Editor that is saved in the backend Verso server which can then be
+loaded into the BFE to generate different types of user interfaces depending on the requirements for the 
+material. So, for example, a Monograph Profile contains a BIBFRAME Work and Instance Resources
+Templates along with any supporting Resource Templates that a cataloger could then load into the BFE to 
+catalog a Book Instance or Work. The Profile JSON file containing one or more Resource Templates is in effect
+a Domain Specific Language (DSL) for generating the user interface needed by the cataloger to cataloging 
+a specific type of BIBFRAME entity. The Profile DSL, while developed for the BIBFRAME ontology, is generic
+enough that other linked-data vocabularies can be used in addition to BIBFRAME but must be specified within 
+a Resource Template. 
+ 
+
+A Resource Template contains a number of properties that define such things as the label to display in the
+user interface, an URI to use as the RDF type, and one or more properties contained in the `propertyTemplate`
+list. Sinopia, following the BFE's example, only displays one top-level Resource Template at a time in the editor
+user interface. A source of confusion early on in the project arose when analyzing the Library of Congress set of 
+Profiles because the id of a profile was often duplicated as one of the ids of the contained Resource Templates. 
+This was fixed in later iterations of these Library of Congress Profiles.
+
+
+Here is an example of a Resource Template for a BIBFRAME Note that could then be referenced by other Resource 
+Templates:
+
+```javascript
+{
+  "id": "resourceTemplate:bf2:Note",
+  "resourceURI": "http://id.loc.gov/ontologies/bibframe/Note",
+  "resourceLabel": "Note",
+  "propertyTemplates": [
+    {
+      "propertyURI": "http://www.w3.org/2000/01/rdf-schema#label",
+      "propertyLabel": "Note",
+      "mandatory": "false",
+      "repeatable": "false",
+      "type": "literal",
+      "resourceTemplates": [],
+      "valueConstraint": {
+        "valueTemplateRefs": [],
+        "useValuesFrom": [],
+        "valueDataType": {},
+        "editable": "true",
+        "repeatable": "false",
+        "defaults": []
+      }
+    }
+  ]
+}
+```
+
+If the property is required, and if the property can be
+duplicated. In the development of Sinopia, the decision was to limit and simplify what values are supported
+in the `type` property, with the simplest being for
+
+
+
+```javascript
+    {
+      "propertyURI": "http://id.loc.gov/ontologies/bibframe/note",
+      "propertyLabel": "Notes about the Work",
+      "mandatory": "false",
+      "repeatable": "true",
+      "type": "resource",
+      "resourceTemplates": [],
+      "valueConstraint": {
+        "valueTemplateRefs": [
+          "resourceTemplate:bf2:Note"
+        ],
+        "useValuesFrom": [],
+        "valueDataType": {},
+        "defaults": []
+      }
+    }
+```
 
 ## React Components
 An open source project sponsored by Facebook, [React][REACT] is a Javascript library that wraps
-HTML elements in defined classes and functions for building user interfaces.    
+HTML elements in defined classes and functions for building user interfaces. 
+
+Initially the intention of the
+Sinopia project team was to extend a LD4P fork of BFE but because of the
+Javascript code organization and lack of any unit or integration tests, Sinopia ended up being implemented
+in a more-modern and decomposed manner that allowed for better testing by breaking down the user interface into 
+decomposed and discreet React components.  
 
 Sinopia's React components are built as [Babel][BABEL] JSX Class Components that are Babel transplained 
 into Javascript functions. Although Sinopia's initial  
