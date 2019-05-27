@@ -1,16 +1,34 @@
 # Introduction
-## Background of the Sinopia Stack
-Funded the Mellon Foundation and overseen as part of the  LD4P (Linked Data for Production) grant,
-[Sinopia][SINOPIA] available at [https://sinopia.io][SINOPIA]. A critical deliverable for a second
-phase of the grant was a collaborative linked-data cataloging environment that could be used in a
-production environment. 
+## Background of Sinopia
+Funded by the Mellon Foundation as part of the  LD4P (Linked Data for Production) grant,
+[Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is a collaborative linked-data 
+cataloging environment that could be used in a production environment. The Sinopia project's primary
+software development team are members of the Stanford University Libraries with Michelle Futornick is
+project owner who directs the priorities and communicates the user's needs and requirements to the 
+development team in an iterative manner following [Agile](https://www.agilealliance.org/) software practices.
 
-Sinopia is developing using ECMAScript 6 features and conventions that is then transplained into
-Javascript using [Babel][BABEL]. 
+The Agile development methodology provides an approach and processes for responding to changes in 
+requirements or environment by emphasizing flexibility and adapting to those changes. Specific Agile practices
+of the Stanford development team uses include pair programming, testing, stand-up meetings, planning sessions,
+and sprints. In pair programming two or more developers collaborate together to code or solve specific problems
+by having one programmer type while both developers talk through the problem together thereby increasing code
+comprehension and knowledge transfer within the team. Another critical Agile practice used by the Sinopia 
+development team is creating unit tests for specific Javascript modules and integration tests that test interactions
+between multiple components and modules in the code base through scripting actions in a headless web browser.
+The Sinopia development team also has daily stand-up meetings where the developers check-in with each other and 
+the product owner on progress and challenges encountered in the previous day and to plan for the upcoming day.
+Finally, the Sinopia team organized to one-to-two week sprints that attempted to accomplish a specific goals and
+tasks within the time period that also included a planning meeting at the beginning of the sprint and weekly
+storytime meeting where challenges and issues that usually required the project owner feedback and decisions 
+that are then incorporated into the sprint execution.  
+
+At the start of the Sinopia project, the decision was made to build the linked data editor based on previous
+development work done by the Library of Congress in the creation of their [BIBFRAME Editor][BFE] and supporting
+projects.      
 
 Two partners in the Sinopia project provide an important service called Questions Authorities (QA), a joint
 project of Cornell University and the University of Iowa. QA is an API service that queries Lucene indexes
-of both RDF and non-RDF datastores and returns JSON data of the results. 
+of both RDF and non-RDF datastores and returns JSON data of the results.  
 
 ## Functional Javascript 
 Within the programming community, the ubiquity of Javascript as the default programming language for 
@@ -20,8 +38,19 @@ years with the introduction of such Javascript libraries as [JQuery][JQUERY] and
 supported technologies, Javascript has morphed into a server-side language with the emergence of the [Node.js][NODE]
 ecosystem.
 
-With the features Javascript, multiple approaches for programming like imperative, object-oriented, and 
-in the past ten years, functional methodologies. 
+Sinopia is developing using ECMAScript 6 features and conventions that is then transplained into
+Javascript using [Babel][BABEL].  
+
+
+
+Javascript supports multiple programming paradigms like imperative, object-oriented, and 
+in the past ten years, the functional programming approach. The popularity of building functional [React][REACT] 
+and [Redux][REDUX] code for web browser and native user interfaces. Javascript built-in `map` and `reduce` 
+operators along with support for currying and other functional-friendly constructs like the `=>` arrow functional 
+form. The key insight in writing functional javascript is focusing on functions with minimal side-effects and
+deterministic expectations that given a set of inputs, the function will return a set of outputs.  
+
+For example,   
 
 ## Resource Templates and Profiles
 The Library of Congress's [Bibframe Editor][BFE] is a BIBFRAME-focused linked-data editor that was an 
@@ -37,24 +66,43 @@ HTML elements in defined classes and functions for building user interfaces.
 Sinopia's React components are built as [Babel][BABEL] JSX Class Components that are Babel transplained 
 into Javascript functions. Although Sinopia's initial  
 
-
- 
 ## Editor's Redux State
 Initially, Sinopia's React components were structured with extensive `props` and state changes
 to represent and respond to actions and user expectations to accepting values both from any 
-parent information and also push state information to any composited child components.
+parent information and also push state information to any composited child components. As the team
+became more conversant with Redux, the refactoring implementation of the React components simplified
+both the model instanations as well as what props and state.
 
 ### React Components Reducers
 For the React components in Sinopia, they reflect or mutate the global Redux state through two 
-methods, `mapStateToProps` and `mapDispatchToProps`. 
-
+methods, `mapStateToProps` and `mapDispatchToProps` as recommended in the official React-Redux
+[documentation](#redux-ref-01).
 
 ### RDF Reducer
 As the Redux state captures the event of a user entering or linking data to when it happens in the 
 React components, at any particular point-in-time Sinopia can generates RDF. 
 
 ## Linking to Other Sources
+Sinopia is able to link to other sources through one or more custom [React][REACT] components 
+that provide a typeahead input using a third party node.js module called [React Bootstrap Typeahead](http://ericgio.github.io/react-bootstrap-typeahead/).  
 
+
+### `InputListLOC` Library of Congress **id.loc.gov** Component
+The Library of Congress's Linked Data Service at [http://id.loc.gov](http://id.loc.gov/) provides a number
+of subjects, thesauri, classifications, and other vocabularies. For large linked data services 
+Sinopia uses Questioning Authorities service but for smaller vocabularies the `InputListLOC` React
+component directly connects and retrieves a JSON list that is presented to the end user as a 
+lookahead. 
+
+Here is a screen shot of the `InputListLOC` component within Sinopia:
+
+### `InputLookupQA` Questioning Authorities Component
+
+### `InputLookupWikidata` Wikidata Component
+
+### `InputLookupRDARegistry` RDA Registry Component
+Another source of controlled vocabularies required by the initial cohort of libraries 
+are curated and hosted at the RDA Registry website. 
 ## Entity Management with the Sinopia Server
 
 ## Next Steps
@@ -68,6 +116,9 @@ those triples, much like the copy-cataloging current MARC based work-flows in li
 
 
 ## References
+
+1. https://react-redux.js.org/using-react-redux/connect-mapstate#usage-guidelines 
+<a name="redux-ref-01"></a>
 
 ## About the author
 Jeremy Nelson is a software engineer with the [Stanford University Libraries][SUL] and technical lead
