@@ -71,13 +71,16 @@ For example, a traditional Javascript function is declared using the `function` 
 ```javascript
 function AddTwo (x,y) {
   return x+y;
-}```
+}
+```
 
-while a more functional ECMAScript using the arrow functional form looks like:
+while a more functional ECMAScript using the `const` keyword and arrow functional form looks like:
+
 ```javascript
-AddTwo = (x,y) => {
+const AddTwo = (x,y) => {
   return x+y
-}``` 
+}
+``` 
 
   
 
