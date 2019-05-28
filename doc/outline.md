@@ -134,12 +134,26 @@ Templates:
   ]
 }
 ```
-
-If the property is required, and if the property can be
+The properties in the `propertyTemplates` are the source for constructing the actual React components containing
+the HTML inputs used in Sinopia Linked Data Editor. Each property contains a `propertyURI` attribute that is used as 
+the RDF predicate in the constructed RDF while the `propertyLabel` is also displayed in user interface.
+Other attributes for property include if the property is required, and if the property can be
 duplicated. In the development of Sinopia, the decision was to limit and simplify what values are supported
-in the `type` property, with the simplest being for
+in the `type` property, with the simplest being `literal` with the others being `lookup`, `list`, and `resource`.
+The `literal` property are for literal values that are entered by the user, while the `list` and `lookup` types
+references typeahead components for searching and linking external entities and values in the user interface. The 
+`valueConstraint` attribute contains a number of sub-attributes like `defaults`, as list of one or more values that
+are used to pre-populate the values in the input fields.   
 
-
+The `resource` type is more complicated in that it is to reference another Resource Template through the 
+`valueConstraint`'s `valueTemplateRes` attribute. The `valueTemplateRefs` attribute is a list of one or more 
+Resource Template IDs that are then used to embedded a Resource Template into the user interface so that the 
+values entered function as a separate entity that is then linked to the calling property. When generating the RDF,
+a URI or blankd-node of the embedded Resource Templates are in the RDF object role with the original Resource 
+Template as the RDF subject and the `propertyURI` property functioning as the RDF predicate.
+ 
+Below is an example of a `propertyTemplate` with a type of **resource** that references the ID of the Resource
+Template above, `resourceTemplate:bf2:Note` in the `valueConstraint.valueTemplateRefs` attribute:
 
 ```javascript
     {
