@@ -81,7 +81,12 @@ const AddTwo = (x,y) => {
   return x+y
 }
 ``` 
-
+Both of these `AddTwo` functions are equivalent in that they take two input parameters and return a 
+single value. The `const` keyword for the second is a critical difference in that it creates an immutable 
+function that cannot be reassigned to another function or variable in subsequent code while defining the
+`AddTwo` function in the first form can be reassigned without the Babel compiler complaining. The `const`
+keyword reduces the opportunity for accidentally introducing bugs by preventing the developer from doing
+reassigning the function with potentially harmful or unintentional effects.  
 
 ## Resource Templates and Profiles
 The Library of Congress's [Bibframe Editor][BFE] is a BIBFRAME-focused linked-data editor that was an 
@@ -176,8 +181,38 @@ Template above, `resourceTemplate:bf2:Note` in the `valueConstraint.valueTemplat
 
 ## React Components
 An open source project sponsored by Facebook, [React][REACT] is a Javascript library that wraps
-HTML elements in defined classes and functions for building user interfaces. 
+HTML elements in defined classes and functions for building user interfaces. React classes and functions are often
+defined in an extension of Javascript called JSX that is used to build components that can be assembled into
+larger, more complex user interfaces. For example, a relative simple JSX component could represent a title on a 
+page with an HTML H1 tag with valid Javascript expression embedded between curly brackets:
 
+```javascript
+const title = <h1>Book Title: {title}</h1>
+```
+
+React components also have two important data structures, a Javascript arrays called `props` and `state`. 
+The `props` array contains read-only properties that can be referenced within the component itself using the
+curly braces syntax and are set when the component is rendered. Because the component's `props` are read-only,
+this enforces the constraint that the `props` are immutable and follow a pure functional form. While creating
+React component in pure functional form is possible, using the ES6 Class syntax allows for more comprehensible 
+code that extends the base `React.Component` class. A React component class must implement a `render` method 
+that returns the desired Javascript.
+
+For example, a simple ES6 Class for the title component above
+could be refactor as 
+
+```javascript
+class Title extends React.Component {
+
+  render() {
+    return (<h1>Book Title: {this.props.title}</h1>)
+  }
+}
+```
+
+ contain other React components and which are part
+
+### Sinopia's React Components
 Initially the intention of the
 Sinopia project team was to extend a LD4P fork of BFE but because of the
 Javascript code organization and lack of any unit or integration tests, Sinopia ended up being implemented
