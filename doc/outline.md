@@ -85,7 +85,7 @@ Both of these `AddTwo` functions are equivalent in that they take two input para
 single value. The `const` keyword for the second is a critical difference in that it creates an immutable 
 function that cannot be reassigned to another function or variable in subsequent code while defining the
 `AddTwo` function in the first form can be reassigned without the Babel compiler complaining. The `const`
-keyword reduces the opportunity for accidentally introducing bugs by preventing the developer from doing
+keyword reduces the opportunity for accidentally introducing bugs by preventing the developer from
 reassigning the function with potentially harmful or unintentional effects.  
 
 ## Resource Templates and Profiles
@@ -139,26 +139,29 @@ Templates:
   ]
 }
 ```
-The properties in the `propertyTemplates` are the source for constructing the actual React components containing
-the HTML inputs used in Sinopia Linked Data Editor. Each property contains a `propertyURI` attribute that is used as 
-the RDF predicate in the constructed RDF while the `propertyLabel` is also displayed in user interface.
-Other attributes for property include if the property is required, and if the property can be
-duplicated. In the development of Sinopia, the decision was to limit and simplify what values are supported
-in the `type` property, with the simplest being `literal` with the others being `lookup`, `list`, and `resource`.
-The `literal` property are for literal values that are entered by the user, while the `list` and `lookup` types
+
+The source for constructing the actual React components containing the HTML inputs used in the Sinopia Linked Data 
+Editor are the properties in the `propertyTemplates` list. Each property contains a `propertyURI` attribute 
+that is used as the RDF predicate in the constructed RDF while the `propertyLabel` is displayed in user interface
+either as an HTML label or as a placeholder in the HTML input.
+Other attributes for the property include *mandatory* set to true if the property is required, 
+*repeatable* if the property can be duplicated. Early In the development of Sinopia, the decision was to limit and 
+simplify what values are supported in the *type* property, with the simplest being `literal` with the others being 
+`lookup`, `list`, and `resource`.
+The `literal` property are for string values that are entered by the user, while the `list` and `lookup` types
 references typeahead components for searching and linking external entities and values in the user interface. The 
-`valueConstraint` attribute contains a number of sub-attributes like `defaults`, as list of one or more values that
+*valueConstraint* attribute contains a number of sub-attributes like *defaults*, as list of one or more values that
 are used to pre-populate the values in the input fields.   
 
-The `resource` type is more complicated in that it is to reference another Resource Template through the 
-`valueConstraint`'s `valueTemplateRes` attribute. The `valueTemplateRefs` attribute is a list of one or more 
+The `resource` type is more complicated in that it references another Resource Template through the 
+*valueConstraint*'s *valueTemplateRefs* attribute. The *valueTemplateRefs* attribute is a list of one or more 
 Resource Template IDs that are then used to embedded a Resource Template into the user interface so that the 
-values entered function as a separate entity that is then linked to the calling property. When generating the RDF,
-a URI or blankd-node of the embedded Resource Templates are in the RDF object role with the original Resource 
-Template as the RDF subject and the `propertyURI` property functioning as the RDF predicate.
+values entered act as a separate entity that is then linked to the calling property. When generating the RDF,
+an URI or blank-node of the embedded Resource Templates are positioned in the RDF object role with the original 
+Resource Template as the RDF subject and the *propertyURI* property functioning as the RDF predicate.
  
-Below is an example of a `propertyTemplate` with a type of **resource** that references the ID of the Resource
-Template above, `resourceTemplate:bf2:Note` in the `valueConstraint.valueTemplateRefs` attribute:
+Below is an example of a *propertyTemplate* with a type of **resource** that references the ID of the Resource
+Template above, `resourceTemplate:bf2:Note` in the *valueConstraint.valueTemplateRefs* attribute:
 
 ```javascript
     {
@@ -190,7 +193,7 @@ page with an HTML H1 tag with valid Javascript expression embedded between curly
 const title = <h1>Book Title: {title}</h1>
 ```
 
-React components also have two important data structures, a Javascript arrays called `props` and `state`. 
+React components also have two important Javascript arrays called `props` and `state`. 
 The `props` array contains read-only properties that can be referenced within the component itself using the
 curly braces syntax and are set when the component is rendered. Because the component's `props` are read-only,
 this enforces the constraint that the `props` are immutable and follow a pure functional form. While creating
@@ -198,8 +201,9 @@ React component in pure functional form is possible, using the ES6 Class syntax 
 code that extends the base `React.Component` class. A React component class must implement a `render` method 
 that returns the desired Javascript.
 
-For example, a simple ES6 Class for the title component above
-could be refactor as 
+The title Javascript expression above could be refactor as a simple ES6 Class by extending the `React.Component`
+and return the HTML snippet with the title prop referenced using the `this` keyword indicating a class instance
+variable: 
 
 ```javascript
 class Title extends React.Component {
@@ -210,17 +214,68 @@ class Title extends React.Component {
 }
 ```
 
- contain other React components and which are part
+If coming from object-oriented languages, the temptation might be to create an hierarchy of React components but
+this pattern is discouraged by the designers of React because React components are intended more for composition, 
+where more complex React components are made-up of simpler components where the enclosing components pass properties
+down through the child's initial props. To illustrate, here is a `Header` Reaction component that 
+contains other React components and like `Title` and an `Author`. 
+
+```javascript
+class Header extends React.Component {
+
+  render() {
+    return(<header>
+            <Title title={"Pride and Prejudice"} />
+            <Author givenName={"Jane"} familyName={"Austen"} />
+           </header>)
+  }
+}
+```
+
+This `Header` component could render this output and save to the web browser's DOM like this:
+
+```html
+<header>
+  <h1>Book Title: Pride and Prejudicer</h1>
+  <p>by Jane Austin</p>
+</header>
+```
 
 ### Sinopia's React Components
 Initially the intention of the
-Sinopia project team was to extend a LD4P fork of BFE but because of the
+Sinopia project team was to extend a LD4P fork of BFE but because of the BFE's 
 Javascript code organization and lack of any unit or integration tests, Sinopia ended up being implemented
 in a more-modern and decomposed manner that allowed for better testing by breaking down the user interface into 
 decomposed and discreet React components.  
 
-Sinopia's React components are built as [Babel][BABEL] JSX Class Components that are Babel transplained 
-into Javascript functions. Although Sinopia's initial  
+
+Sinopia's React components are built as JSX Class Components that are complied into Javascript functions
+using [Babel][BABEL]. To build out the user interface for the Linked Data Editor, Sinopia uses a combination 
+of third party React components along with custom React components. Sinopia's Linked Data editor is a hierarchy 
+of components with `<RootContainer>` being the top-level React component. The `<RootContainer>` imports the 
+`<OffCanvas>` that is composed of two children, the `<OffCanvasMenu>` and the `<OffCanvasBody>` components 
+both from the [react-offcanvas](https://www.npmjs.com/package/react-offcanvas) module. The `<OffCanvasMenu>` 
+presents a list of links to help and third-party resources displayed in a pane displayed when the 
+**Help and Resources** link in the navigation bar is clicked. The other function of the `<RootContainter>` component
+is to connect the React user interface to the Redux state store that will be explored in the next section.
+
+![Root Container and Off-Canvas React Components](../img/root-container-off-canvas.png)
+
+The `<OffCanvasBody>` contains another React component from the 
+[react-router-dom](https://reacttraining.com/react-router/) third-party module that allows for the easy generation of
+a single-page application `<BrowserRouter>` [React][REACT] component that matches specific URL patterns into 
+multiple routes for base route `/` to the homepage, the `/editor` route to editor forms, a `/templates` route that
+displays a list of available templates and to upload a new resource template. Other supporting routes include the
+`/login` to allow the user to authenticate using AWS Cogntio, The `/menu` for the off-canvas help and resources 
+page, and a *404* route for unmatched routes entered by the user.   
+ 
+* [`<RootContainer>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/RootContainer.jsx)
+  * [`<OffCanvasBody>`](https://www.npmjs.com/package/react-offcanvas#offcanvasbody)
+    * [`<BrowserRouter>`](https://reacttraining.com/react-router/web/api/BrowserRouter)
+      * [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
+  * [`<OffCanvasMenu>`](https://www.npmjs.com/package/react-offcanvas#offcanvasmenu)
+    * [`<CanvasMenu>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/CanvasMenu.jsx)
+
 
 ## Editor's Redux State
 Initially, Sinopia's React components were structured with extensive `props` and state changes
