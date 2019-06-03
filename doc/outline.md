@@ -259,8 +259,6 @@ presents a list of links to help and third-party resources displayed in a pane d
 **Help and Resources** link in the navigation bar is clicked. The other function of the `<RootContainter>` component
 is to connect the React user interface to the Redux state store that will be explored in the next section.
 
-![Root Container and Off-Canvas React Components](../img/root-container-off-canvas.png)
-
 The `<OffCanvasBody>` contains another React component from the 
 [react-router-dom](https://reacttraining.com/react-router/) third-party module that allows for the easy generation of
 a single-page application `<BrowserRouter>` [React][REACT] component that matches specific URL patterns into 
@@ -276,7 +274,48 @@ page, and a *404* route for unmatched routes entered by the user.
   * [`<OffCanvasMenu>`](https://www.npmjs.com/package/react-offcanvas#offcanvasmenu)
     * [`<CanvasMenu>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/CanvasMenu.jsx)
 
+On the Sinopia's homepage, the top level React Components are outlined in the following image when the 
+**Help and Resources** is clicked and the `<OffCanvasMenu />` is displayed:
 
+![Root Container and Off-Canvas React Components](../img/root-container-off-canvas.png)
+
+### HomePage and User Authentication
+When accessing Sinopia's homepage at [sinopia.io](https://sinopia.io/), the `<App />` React 
+component, using the `<Switch />` and `<Route />` React components from the react-router-dom package,
+displays the `<HomePage />` and the standard Sinopia `<Footer />` React components. The `<HomePage />`
+component contains three children, the `<Header />`, `<NewsPanel />`, and the 
+`<DescPanel />` React components. The homepage's `<Header />` contains links to the `/templates` route, 
+a link to Sinopia's Profile Editor, and finally a link that activates the `<OffCanavsMenu />`'s child's 
+`<CanvasMenu />`. The `<NewsPanel />` has a `<NewsItem />` that allows the product owner to make 
+announcements by editing and then creating a pull request that can then be reviewed and then pushed to the
+AWS environments by the developers and system administrators. The `<DescPanel />` contains more general
+description of the Sinopia project and what the project hopes to accomplish during the grant period and 
+after.
+
+The `<App />` also contains the `<LoginPanel />` component that uses the Amazon's [Amplify SDK](https://aws-amplify.github.io/docs/js/api)
+to authenticate the user to the AWS Cognito service that then generates a valid [JSON Web Token](https://jwt.io/a) 
+for user authentication in Sinopia and in Sinopia's backend [Trellis][TRELLIS] Linked Data Platform. For the 
+initial release of Sinopia, all users are authorized to add, edit, or delete any resources stored in
+Trellis. This may change in future releases with more restrictive user rights for resources created in 
+specific group containers in Trellis. 
+
+The React Component Hierarchy for the `<App />`'s `<HomePage />`, `<LoginPanel />`, and `<Footer />`:
+
+* [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
+  * [`<LoginPanel>`]()
+    * [`<Switch />]()
+      * [`<Route />`]() => [`<HomePage />`]()
+        * [`<Header />`]()
+        * [`<NewsPanel />`]()
+          * [`<NewsItem />`]()
+        * [`<DescPanel />`]
+  * [`<Footer />`]()
+
+### Resource Templates Upload and Listing
+From Sinopia's `<HomePage />`'s `<Header />`, an authenticated user is taken to the `/templates` route 
+which contains 
+
+### Linked Data Editor Forms
 ## Editor's Redux State
 Initially, Sinopia's React components were structured with extensive `props` and state changes
 to represent and respond to actions and user expectations to accepting values both from any 
@@ -321,7 +360,7 @@ are curated and hosted at the RDA Registry website.
 ### Custom Reducers
 An early requirement of Sinopia is to provide the ability of catalogers to do two different, but related, workflows.
 For pre-existing graphs of RDF entities either available from third party authorities like 
-Library of Congress, VIAF, or ShareVDEn or from internally created entities stored in Sinopia's server, catalogers
+Library of Congress, VIAF, or ShareVDE or from internally created entities stored in Sinopia's server, catalogers
 will need to be able either edit, add, or delete triples about these entities or derive a new RDF entity by copying
 those triples, much like the copy-cataloging current MARC based work-flows in libraries. 
 
@@ -343,3 +382,4 @@ on the [Sinopia][SINOPIA] project. He is also co-founder and CTO of [KnowledgeLi
 [REACT]: https://reactjs.org/
 [SINOPIA]: https://sinopia.io
 [SUL]: https://library.stanford.edu/
+[TRELLIS]: https://www.trellisldp.org/
