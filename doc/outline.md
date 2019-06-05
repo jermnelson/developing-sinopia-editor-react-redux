@@ -297,14 +297,14 @@ to authenticate the user to the AWS Cognito service that then generates a valid 
 for user authentication in Sinopia and in Sinopia's backend [Trellis][TRELLIS] Linked Data Platform. For the 
 initial release of Sinopia, all users are authorized to add, edit, or delete any resources stored in
 Trellis. This may change in future releases with more restrictive user rights for resources created in 
-specific group containers in Trellis. 
+specific group containers within Trellis. 
 
 The React Component Hierarchy for the `<App />`'s `<HomePage />`, `<LoginPanel />`, and `<Footer />`:
 
 * [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
   * [`<LoginPanel>`]()
-    * [`<Switch />]()
-      * [`<Route />`]() => [`<HomePage />`]()
+    * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
+      * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<HomePage />`]()
         * [`<Header />`]()
         * [`<NewsPanel />`]()
           * [`<NewsItem />`]()
