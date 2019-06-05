@@ -1,6 +1,6 @@
 # Introduction
 ## Background of Sinopia
-Funded by the Mellon Foundation as part of the  LD4P (Linked Data for Production) grant,
+Funded by the Adrew W. Mellon Foundation as part of the  LD4P (Linked Data for Production) grant,
 [Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is a cloud-based collaborative linked-data 
 cataloging environment that could be used in a production environment. The Sinopia project's primary
 software development team are members of the Stanford University Libraries with Michelle Futornick is
@@ -295,49 +295,131 @@ after.
 The `<App />` also contains the `<LoginPanel />` component that uses the Amazon's [Amplify SDK](https://aws-amplify.github.io/docs/js/api)
 to authenticate the user to the AWS Cognito service that then generates a valid [JSON Web Token](https://jwt.io/a) 
 for user authentication in Sinopia and in Sinopia's backend [Trellis][TRELLIS] Linked Data Platform. For the 
-initial release of Sinopia, all users are authorized to add, edit, or delete any resources stored in
+initial release of Sinopia, all catalogers are authorized to add, edit, or delete any resources stored in
 Trellis. This may change in future releases with more restrictive user rights for resources created in 
 specific group containers within Trellis. 
 
 The React Component Hierarchy for the `<App />`'s `<HomePage />`, `<LoginPanel />`, and `<Footer />`:
 
 * [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
-  * [`<LoginPanel>`]()
+  * [`<LoginPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/LoginPanel.jsx)
     * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
-      * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<HomePage />`]()
-        * [`<Header />`]()
-        * [`<NewsPanel />`]()
-          * [`<NewsItem />`]()
-        * [`<DescPanel />`]
-  * [`<Footer />`]()
+      * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<HomePage />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/HomePage.jsx)
+        * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Header.jsx)
+        * [`<NewsPanel />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/NewsPanel.jsx)
+          * [`<NewsItem />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/NewsItem.jsx)
+        * [`<DescPanel />`(https://github.com/LD4P/sinopia_editor/blob/master/src/components/DescPanel.jsx)]
+  * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
+
+Below are these React Components diagrammed in a screen shot of Sinopia's homepage at [sinopia.io](https://sinopia.io/):
+
+![Homepage React Components](../img/homepage-components.png)
+
+#### `<HomePage>` Child Components
+
+*  `<Header>` **Component**
+The `<Header>` component for Sinopia's homepage has a different navigation bar with links to the `<ImportResourceTemplate >`,
+Sinopia's Profile Editor, and a link to activate the `<OffCanvasMenu>` to display the Help and Resources links. 
+
+*  `<NewsPanel>` and `<NewsItem>` **Components**
+The `<NewsPanel>` component is composed of one `<NewsItem>` component that is a list of news items maintained by Sinopia's
+product owner and is usually includes recent items like new Sinopia releases, conferences or presentations about Sinopia, 
+and other items of interest to the Sinopia's community.  
+
+*  `<DescPanel>` **Component**
+The `<DescPanel>` component is a short description of the goals for Sinopia and the partner institutions in this project.
 
 ### Resource Templates Upload and Listing
-From Sinopia's `<HomePage />`'s `<Header />`, an authenticated user is taken to the `/templates` route 
-which contains 
+From Sinopia's `<HomePage />`'s `<Header />`, an authenticated cataloger is taken to the `/templates` route using the 
+`<ImportResourceTemplate />`component containing an `<Header />` component, an `<ImportFileZone .>` component used 
+to display and handle a button for catalogers to upload a JSON profile file containing one or more resource templates, and 
+a `<SinopiaResourceTemplates />` component displaying an HTML table populated by Resource Templates contained either in 
+a running instance of the Sinopia Server or the sample Resource templates if running the Editor in server spoof mode.
 
-### Linked Data Editor Forms
-## Editor's Redux State
-Initially, Sinopia's React components were structured with extensive `props` and state changes
-to represent and respond to actions and user expectations to accepting values both from any 
-parent information and also push state information to any composited child components. As the team
-became more conversant with Redux, the refactoring implementation of the React components simplified
-both the model instanations as well as what props and state.
+* [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
+  * [`<LoginPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/LoginPanel.jsx)
+    * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
+      * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<ImportResourceTemplate />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ImportResourceTemplate.jsx)
+        * [`<Header />`]()
+        * [`<ImportFileZone />`]()
+        * [`<SinopiaResourceTemplates />`]()
+    * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
 
-### React Components Reducers
-For the React components in Sinopia, they reflect or mutate the global Redux state through two 
-methods, `mapStateToProps` and `mapDispatchToProps` as recommended in the official React-Redux
-[documentation](#redux-ref-01).
 
-### RDF Reducer
-As the Redux state captures the event of a user entering or linking data to when it happens in the 
-React components, at any particular point-in-time Sinopia can generates RDF. 
+#### `<ImportResourceTemplate />` Child Components
 
-## Linking to Other Sources
+* `<Header>` **Component**
+For both the `/templates` and `/editor` routes and components, the same `<Header>` component is used for displaying the navigation
+bar and the three tabs for the Browser, Editor, and Resource Templates. 
+
+* `<ImportFileZone />` **Component**
+The `<ImportFileZone />` component wraps a [third-party React component]() that allows the cataloger to either use their 
+computer's drag-and-drop a JSON Profile file containing one or more resource templates into the application that then 
+validates the profile and resource templates first before uploading the resource templates to the Sinopia Server. 
+
+* `<SinopiaResourceTemplates />` **Component**
+The `<SinopiaResourceTemplates />` component is initialized with a call out to Sinopia Server's Trellis linked data platform
+and loads all of the available resource templates for selection by the cataloger. 
+
+### Linked Data Editor Tab
+When a user selects a Resource Template from the `<SinopiaResourceTemplates />` table, Sinopia loads the JSON Resource Template
+into a new instance of the `<Editor />`'s `<ResourceTemplate />` component. In the `<ResourceTemplate />` component functioning
+as a container and connector to the Redux state, a `<ResourceTemplateForm />` creates a `<PropertyPanel />` for each property.
+The React component hierarchy is outlined below:
+
+* [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
+  * [`<LoginPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/LoginPanel.jsx)
+    * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
+      * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<Editor />`]()
+         * [`<Header />`]()
+         * [`<RDFModal />`]()
+         * [`<GroupChoiceModal />`]()
+         * [`<ResourceTemplate />`]()
+           * [`<ResourceTemplateForm>`](https://github.com/LD4P/sinopia_editor/)
+             * [`<PropertyPanel>`](https://github.com/LD4P/sinopia_editor/)
+               * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/)
+               * [`<InputListLOC>`](https://github.com/LD4P/sinopia_editor/)
+               * [`<InputLookupQA>`](https://github.com/LD4P/sinopia_editor/)
+               * [`<InputLookupSinopia>`]()
+               * [`<PropertyResourceTemplate>`](https://github.com/LD4P/sinopia_editor/)
+                 * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/)
+                   * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/)
+                   * [`<InputListLOC>`](https://github.com/LD4P/sinopia_editor/)
+                   * [`<InputLookupQA>`](https://github.com/LD4P/sinopia_editor/)
+                   * [`<InputLookupSinopia>`]()
+                   * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/)
+    * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
+         
+#### `<Editor /`> Child Components
+
+* `<RDFModal />` **Component**
+Part of the `<Editor/`> is an HTML button labeled **Preview RDF** that when clicked shows a Bootstrap modal
+containing the generated RDF based on the Redux state of the application.
+
+* `<GroupChoiceModal />` **Component**
+
+* `<ResourceTemplate />` and `<ResourceTemplateForm />` **Components**
+
+* `<PropertyPanel />` **Component**
+
+*  `<InputLiteral />`, `<InputListLOC />`, `<InputLookupQA />`, and `<InputLookupSinopia />` **Components**
+The most basic HTML input in Sinopia is part of the `<InputLiteral />` React component. 
+
+* `<PropertyTemplateOutline />` **Component** 
+
+### Browse Tab
+For catalogers using Sinopia, they need to be able to find and or they need to edit the entity itself.  
+
+
+## Linking to Existing Sinopia Entities and Other Sources
 Sinopia is able to link to other sources through one or more custom [React][REACT] components 
-that provide a typeahead input using a third party node.js module called [React Bootstrap Typeahead](http://ericgio.github.io/react-bootstrap-typeahead/).  
+that provide a typeahead input using a third party node.js module called 
+[React Bootstrap Typeahead](http://ericgio.github.io/react-bootstrap-typeahead/).  
 
-
-### `InputListLOC` Library of Congress **id.loc.gov** Component
+### `<InputLookupSinopia />` Component
+The `<InputLookupSinopia />` component allows catalogers to reference existing entities created within 
+Sinopia 
+### `<InputListLOC>` Library of Congress **id.loc.gov** Component
 The Library of Congress's Linked Data Service at [http://id.loc.gov](http://id.loc.gov/) provides a number
 of subjects, thesauri, classifications, and other vocabularies. For large linked data services 
 Sinopia uses Questioning Authorities service but for smaller vocabularies the `InputListLOC` React
@@ -346,17 +428,31 @@ lookahead.
 
 Here is a screen shot of the `InputListLOC` component within Sinopia:
 
-### `InputLookupQA` Questioning Authorities Component
+### `<InputLookupQA>` Questioning Authorities Component
 
-### `InputLookupWikidata` Wikidata Component
 
-### `InputLookupRDARegistry` RDA Registry Component
-Another source of controlled vocabularies required by the initial cohort of libraries 
-are curated and hosted at the RDA Registry website. 
+## Editor's Redux State
+Initially, Sinopia's React components were structured with extensive `props` and state changes
+to represent and respond to actions and user expectations to accepting values both from any 
+parent information and also push state information to any composited child components. As the team
+became more conversant with Redux, the refactoring implementation of the React components simplified
+both the component creation as well as what props and state variables are needed at this level of
+components. 
+
+### React Components Reducers
+For the React components in Sinopia, they reflect or mutate the global Redux state through two 
+methods, `mapStateToProps` and `mapDispatchToProps` as recommended in the official React-Redux
+[documentation](#redux-ref-01).
+
+### RDF Generation and the Sinopia Server
+As the Redux state captures the event of a user entering or linking data to when it happens in the 
+React components, at any particular point-in-time Sinopia can generates RDF. 
+
 ## Entity Management with the Sinopia Server
 
 ## Next Steps
 ### Context-specific React and Web Components
+### `<InputLookupWikidata />` Wikidata Component
 ### Custom Reducers
 An early requirement of Sinopia is to provide the ability of catalogers to do two different, but related, workflows.
 For pre-existing graphs of RDF entities either available from third party authorities like 
