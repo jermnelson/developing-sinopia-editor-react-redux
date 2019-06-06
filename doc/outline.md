@@ -340,17 +340,21 @@ a running instance of the Sinopia Server or the sample Resource templates if run
   * [`<LoginPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/LoginPanel.jsx)
     * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
       * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<ImportResourceTemplate />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ImportResourceTemplate.jsx)
-        * [`<Header />`]()
-        * [`<ImportFileZone />`]()
-        * [`<SinopiaResourceTemplates />`]()
+        * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/Header.jsx)
+        * [`<ImportFileZone />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ImportFileZone.jsx)
+        * [`<SinopiaResourceTemplates />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/SinopiaResourceTemplates.jsx)
     * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
 
+
+![ImportResourceTemplate React Component and Children](../img/import-resource-templates.png)
 
 #### `<ImportResourceTemplate />` Child Components
 
 * `<Header>` **Component**
 For both the `/templates` and `/editor` routes and components, the same `<Header>` component is used for displaying the navigation
-bar and the three tabs for the Browser, Editor, and Resource Templates. 
+bar and the three tabs for the Browser, Editor, and Resource Templates. The `<Header>` component also contains three 
+`<NavLink>` React components from the react-router-dom package that is highlights the correct tab depending on the route being
+displayed in the editor.
 
 * `<ImportFileZone />` **Component**
 The `<ImportFileZone />` component wraps a [third-party React component]() that allows the cataloger to either use their 
@@ -371,8 +375,8 @@ The React component hierarchy is outlined below:
   * [`<LoginPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/LoginPanel.jsx)
     * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
       * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<Editor />`]()
-         * [`<Header />`]()
-         * [`<RDFModal />`]()
+         * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/Header.jsx)
+         * [`<RDFModal />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/RDFModal.jsx)
          * [`<GroupChoiceModal />`]()
          * [`<ResourceTemplate />`]()
            * [`<ResourceTemplateForm>`](https://github.com/LD4P/sinopia_editor/)
