@@ -1,11 +1,12 @@
 # Introduction
 ## Background of Sinopia
 Funded by the Adrew W. Mellon Foundation as part of the  LD4P (Linked Data for Production) grant,
-[Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is a cloud-based collaborative linked-data 
-cataloging environment that could be used in a production environment. The Sinopia project's primary
-software development team are members of the Stanford University Libraries with Michelle Futornick is
-project owner who directs the priorities and communicates the user's needs and requirements to the 
-development team in an iterative manner following [Agile](https://www.agilealliance.org/) software practices.
+[Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is an open-source, cloud-based 
+collaborative linked-data cataloging environment that could be used in a production environment. 
+The Sinopia project's primary software development team are members of the Stanford University 
+Libraries with Michelle Futornick the project owner who directs the priorities and communicates 
+the user's needs and requirements to the development team in an iterative manner following 
+[Agile](#AGLE1) software practices.
 
 The Agile development methodology provides an approach and processes for responding to changes in 
 requirements or environment by emphasizing flexibility and adapting to those changes. Specific Agile practices
@@ -22,7 +23,7 @@ tasks within the time period that also included a planning meeting at the beginn
 storytime meeting where challenges and issues that usually required the project owner feedback and decisions 
 that are then incorporated into the sprint execution.  
 
-At the start of the Sinopia project, the decision was made to build the linked data editor based on previous
+At the start of the Sinopia project, the decision made by team was to build the linked data editor based on the previous
 development work done by the Library of Congress in the creation of their [BIBFRAME Editor][BFE] or BFE along
 with supporting projects like the [BIBFRAME Profile Editor](https://github.com/lcnetdev/profile-edit) and 
 [Verso](https://github.com/lcnetdev/verso). The Library of Congress catalogers have been using the BFE to 
@@ -87,6 +88,14 @@ function that cannot be reassigned to another function or variable in subsequent
 `AddTwo` function in the first form can be reassigned without the Babel compiler complaining. The `const`
 keyword reduces the opportunity for accidentally introducing bugs by preventing the developer from
 reassigning the function with potentially harmful or unintentional effects.  
+
+A Javascript Array is a list-like Object that contains two methods [`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) 
+and [`reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) that helps in 
+developing functional code for React components and Redux reducers. The `map` method returns a new Javascript array with the 
+results of executing a function on every member in the original array. Using the arrow functional form with the `map` 
+method results in simpler implementation code and is fully functional by taking two inputs, the array and an anonymous 
+function defined with the arrow functional form, and returns a new Array. The `reduce` method with the arrow functional
+form applies an anonymous function that reduces the members the array to single member object.
 
 ## Resource Templates and Profiles
 The Library of Congress's [Bibframe Editor][BFE] is a BIBFRAME-focused linked-data editor that was an 
@@ -308,7 +317,7 @@ The React Component Hierarchy for the `<App />`'s `<HomePage />`, `<LoginPanel /
         * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Header.jsx)
         * [`<NewsPanel />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/NewsPanel.jsx)
           * [`<NewsItem />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/NewsItem.jsx)
-        * [`<DescPanel />`(https://github.com/LD4P/sinopia_editor/blob/master/src/components/DescPanel.jsx)]
+        * [`<DescPanel />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/DescPanel.jsx)
   * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
 
 Below are these React Components diagrammed in a screen shot of Sinopia's homepage at [sinopia.io](https://sinopia.io/):
@@ -351,12 +360,14 @@ a running instance of the Sinopia Server or the sample Resource templates if run
 #### `<ImportResourceTemplate />` Child Components
 
 * `<Header>` **Component**
+
 For both the `/templates` and `/editor` routes and components, the same `<Header>` component is used for displaying the navigation
 bar and the three tabs for the Browser, Editor, and Resource Templates. The `<Header>` component also contains three 
 `<NavLink>` React components from the react-router-dom package that is highlights the correct tab depending on the route being
 displayed in the editor.
 
 * `<ImportFileZone />` **Component**
+
 The `<ImportFileZone />` component wraps a [third-party React component]() that allows the cataloger to either use their 
 computer's drag-and-drop a JSON Profile file containing one or more resource templates into the application that then 
 validates the profile and resource templates first before uploading the resource templates to the Sinopia Server. 
@@ -410,8 +421,8 @@ up a pop-up modal that displays a drop-down list of institutions and organizatio
 * `<ResourceTemplate />` and `<ResourceTemplateForm />` **Components**
 The `<ResourceTemplate />` Component includes the label of the loaded resource template, that **Preview RDF** and 
 **Save &amp; Publish** buttons, and the `<ResourceTemplateForm />` that wraps one or more `<PropertyPanel />`.
-The  `<PropertyLabel` as the text, with optional `< 
-components.  
+The  `<PropertyLabel/>` component provides the text in the panel's header with one or more optional styling
+using such components as the `<RequiredSuperscript />` to display a red asterisk for a required `<PropertyPanel />`.  
 
 #### `<PropertyPanel />` **Component**
 Every property template in the loaded resource template, an instance of the `<PropertyPanel />` is rendered. 
@@ -435,6 +446,10 @@ export default class PropertyPanel extends Component {
 
 ```
 
+The `getCssClasses` is a simple class that set's the panel div's Bootstrap floating class to create 
+two columns of `<PropertyPanel />`s.
+
+
 ```javascript
   getCssClasses = () => {
     let floatClass = 'pull-left'
@@ -447,6 +462,15 @@ export default class PropertyPanel extends Component {
 
     return `panel panel-property ${floatClass}`
   }
+```
+
+Finally, the `<PropertyPanel renders a combination of HTML elements and other React components,
+including any children stored in the `props for the component instance. The `<PropertyPanel />`
+doesn't need to know or care what the children components are, just that the child React 
+component render some content. 
+
+
+```javascript
 
   render() {
     return (
@@ -463,69 +487,163 @@ export default class PropertyPanel extends Component {
 }
 ```
 
-*  `<InputLiteral />`, `<InputListLOC />`, `<InputLookupQA />`, and `<InputLookupSinopia />` **Components**
+*  `<InputLiteral />` **Components**
 The most basic HTML input in Sinopia is part of the `<InputLiteral />` React component. 
 
 * `<PropertyTemplateOutline />` **Component** 
-
-### Browse Tab
-For catalogers using Sinopia, they need to be able to find and or they need to edit the entity itself.  
-
 
 ## Linking to Existing Sinopia Entities and Other Sources
 Sinopia is able to link to other sources through one or more custom [React][REACT] components 
 that provide a typeahead input using a third party node.js module called 
 [React Bootstrap Typeahead](http://ericgio.github.io/react-bootstrap-typeahead/).  
 
-### `<InputLookupSinopia />` Component
-The `<InputLookupSinopia />` component allows catalogers to reference existing entities created within 
-Sinopia 
+
 ### `<InputListLOC>` Library of Congress **id.loc.gov** Component
 The Library of Congress's Linked Data Service at [http://id.loc.gov](http://id.loc.gov/) provides a number
 of subjects, thesauri, classifications, and other vocabularies. For large linked data services 
 Sinopia uses Questioning Authorities service but for smaller vocabularies the `InputListLOC` React
 component directly connects and retrieves a JSON list that is presented to the end user as a 
-lookahead. 
+lookahead provided by the 'react-bootstrap-typeahead'](#RBT) module. These linked data vocabularies
+are pulled from a JSON configuration object that is shared with the `<InputLookupQA>` and 
+soon the `<InputLookupSinopia />` React components.
 
 Here is a screen shot of the `InputListLOC` component within Sinopia:
 
+![Typeahead result from the InputListLOC component in Sinopia](../img/input-list-loc.png)
+
+The URI and label is saved in the `<InputListLOC>` props with the URI becoming an RDF object of
+the entity as the RDF subject and the propertyTemplate's proeprtyURI being the predicate.
+
 ### `<InputLookupQA>` Questioning Authorities Component
+From the beginning, Sinopia project team includes close collaboration with Cornell University's 
+Huda Khan working on the React components to support search the Questioning Authorities (QA) service
+run as a collaborative effort with Lynette Randell and David Echeman at the University of Iowa
+School of Information Science. The QA is a cache built with Solr and 
+the Fusuki triplestore is managed by an Question Authority API endpoint using a Swagger API
+with Sinopia's `<InputLookupQA>` component. 
+  
+![Typeahead result from using the InputLookupQA component in Sinopia](../img/input-lookup-qa.png)
+### `<InputLookupSinopia />` Component
+The `<InputLookupSinopia />` component allows catalogers to reference existing entities created within 
+Sinopia and will look and act in a similar fashion as the `<InputListLOC>` and `<InputLookupQA>`. 
 
+### Browse Tab
+For catalogers using Sinopia, they need to be able to find and or they need to edit the entity itself.  
+This feature is currently under active development and will have a simple keyword search that will
+return a list of Sinopia entities that then can be selected and loaded into the Editor for updates.
 
+ 
 ## Editor's Redux State
 Initially, Sinopia's React components were structured with extensive `props` and state changes
 to represent and respond to actions and user expectations to accepting values both from any 
 parent information and also push state information to any composited child components. As the team
 became more conversant with Redux, the refactoring implementation of the React components simplified
 both the component creation as well as what props and state variables are needed at this level of
-components. 
+components. The Redux state in Sinopia is a snapshot in time of what data is in the active
+React components. For example, the following Resource Template, a BIBFRAME Work Title, into 
+the Editor and entering a couple of values so the current state of the User Interface looks like:
 
-### React Components Reducers
-For the React components in Sinopia, they reflect or mutate the global Redux state through two 
+
+![Pride and Prejudice Work Title Resource Template](../img/pride-prejudice-work-title.png)
+
+Is represented in this Global Redux state:
+
+```javascript
+selectorReducer: {
+    'resourceTemplate:bf2:WorkTitle': {
+      'http://id.loc.gov/ontologies/bibframe/mainTitle': {
+        items: [
+          {
+            content: 'Pride and Prejudice',
+            id: 'xsGpxN4SU'
+          }
+        ]
+      },
+      'http://id.loc.gov/ontologies/bibframe/partName': {},
+      'http://id.loc.gov/ontologies/bibframe/partNumber': {},
+      'http://id.loc.gov/ontologies/bibframe/note': {
+        BuOLQNhYA: {
+          'resourceTemplate:bf2:Title:Note': {
+            'http://www.w3.org/2000/01/rdf-schema#label': {
+              items: [
+                {
+                  content: 'Many editions, adaptations, and films',
+                  id: 'S7h8lzDj4'
+                }
+              ]
+            }
+          }
+        }
+      },
+      rdfClass: 'http://id.loc.gov/ontologies/bibframe/Title'
+    }
+  }
+```
+
+For the `<InputLiteral >` component instance for the propertyTemplate mainTitle, the values are
+extracted by using a Redux reducer `inputPropertyReducer` function that takes the `<InputLiteral>`'s
+`reduxPath` as a Javascript array and using the Redux state as the starting point, reduces the Redux state to 
+the Javascript Object containing an items Javascript array. The `reduxPath` for the BIBFRAME Main Title
+`<InputLiteral>` is in this case:
+
+`['resourceTemplate:bf2:WorkTitle','http://id.loc.gov/ontologies/bibframe/mainTitle']`.  
+
+React components in Sinopia, they reflect or mutate the global Redux state through two 
 methods, `mapStateToProps` and `mapDispatchToProps` as recommended in the official React-Redux
-[documentation](#redux-ref-01).
+[documentation](#redux-ref-01). 
 
 ### RDF Generation and the Sinopia Server
 As the Redux state captures the event of a user entering or linking data to when it happens in the 
-React components, at any particular point-in-time Sinopia can generates RDF. 
+React components, at any particular point-in-time Sinopia can generates RDF. From the previous 
+Redux example, clicking on the **Previw RDF** uses a Redux reducer to create an instance of
+the RDF `GraphBuilder` class and generate the following RDF graph that can then be saved and published
+through the backend Sinopia Server:  
 
-## Entity Management with the Sinopia Server
+
+```
+<> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://id.loc.gov/ontologies/bibframe/Title> .
+<> <http://id.loc.gov/ontologies/bibframe/mainTitle> "Pride and Prejudice" .
+<> <http://id.loc.gov/ontologies/bibframe/note> _:b1 .
+_:b1 <http://www.w3.org/2000/01/rdf-schema#label> "Many editions, adaptations, and films" .
+
+```
 
 ## Next Steps
-### Context-specific React and Web Components
-### `<InputLookupWikidata />` Wikidata Component
-### Custom Reducers
+The Sinopia Linked Data Editor targeted Minimal Viable Product release is at the end of July 2019. This
+release will allow the Sinopia Cohorts to start cataloging using the Linked Data Editor and provide valuable
+sources of requirements, pulled from their usage and experiences, to help the Sinopia team learn and plan 
+for the next work-cycle. As the Sinopia user and developer community expands beyond the Stanford and Cornell
+development teams, Sinopia's as a cataloging tool built as a generic cataloging editor for Linked Data, is
+a strong base to extend and expand into the future. Currently Sinopia has three linking sources, the Library 
+of Congress, the Questioning Authorities, and internally created entities. In the next work cycle, Sinopia
+may build out a new component, `<InputLookupWikidata />`, for linking and direct integration with Wikidata.
+
 An early requirement of Sinopia is to provide the ability of catalogers to do two different, but related, workflows.
 For pre-existing graphs of RDF entities either available from third party authorities like 
 Library of Congress, VIAF, or ShareVDE or from internally created entities stored in Sinopia's server, catalogers
 will need to be able either edit, add, or delete triples about these entities or derive a new RDF entity by copying
-those triples, much like the copy-cataloging current MARC based work-flows in libraries. 
+those triples, much like the copy-cataloging current MARC based work-flows in libraries.
 
+Finally, to encourage and broaden adoption of Sinopia beyond AWS specific services, a new Sinopia Server 
+infrastructure based on [Kubernetes](https://kubernetes.io/) would allow other organizations to run their
+own version of the Sinopia Stack.
 
 ## References
+1. Agile Alliance [https://www.agilealliance.org/](https://www.agilealliance.org/)
 
-1. https://react-redux.js.org/using-react-redux/connect-mapstate#usage-guidelines 
+1. React Bootstrap Typeahead Node.js package at 
+[http://ericgio.github.io/react-bootstrap-typeahead/](http://ericgio.github.io/react-bootstrap-typeahead/) 
+<a name="RBT"></a>
+
+1. React Redux Usage Guidelineshttps://react-redux.js.org/using-react-redux/connect-mapstate#usage-guidelines 
 <a name="redux-ref-01"></a>
+
+
+## Acknowledgments
+Sinopia would not have been possible with the talents, hard-work, and experience of the current and former
+members of the development team including Joshua Greben, Naomi Dushay, Sarav Shah, Johnathan Martin, Michael Giarlo,
+Justin Coyne, Peter Mangiafico, Justin Littman, and Aaron Collier.
+
 
 ## About the author
 Jeremy Nelson is a software engineer with the [Stanford University Libraries][SUL] and technical lead
