@@ -377,8 +377,8 @@ The React component hierarchy is outlined below:
       * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<Editor />`]()
          * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/Header.jsx)
          * [`<RDFModal />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/RDFModal.jsx)
-         * [`<GroupChoiceModal />`]()
-         * [`<ResourceTemplate />`]()
+         * [`<GroupChoiceModal />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/GroupChoiceModal.jsx)
+         * [`<ResourceTemplate />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ResourceTemplate.jsx)
            * [`<ResourceTemplateForm>`](https://github.com/LD4P/sinopia_editor/)
              * [`<PropertyPanel>`](https://github.com/LD4P/sinopia_editor/)
                * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/)
@@ -394,17 +394,74 @@ The React component hierarchy is outlined below:
                    * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/)
     * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
          
+
+![Resource Template Form and Child Components](../img/resource-template.png)
+
 #### `<Editor /`> Child Components
 
 * `<RDFModal />` **Component**
 Part of the `<Editor/`> is an HTML button labeled **Preview RDF** that when clicked shows a Bootstrap modal
-containing the generated RDF based on the Redux state of the application.
+containing the generated RDF based on the Redux state of the application. 
 
 * `<GroupChoiceModal />` **Component**
+At any point when adding or editing the RDF for the entity, the cataloger clicks the **Save &amp; Publish** button that brings
+up a pop-up modal that displays a drop-down list of institutions and organizations 
 
 * `<ResourceTemplate />` and `<ResourceTemplateForm />` **Components**
+The `<ResourceTemplate />` Component includes the label of the loaded resource template, that **Preview RDF** and 
+**Save &amp; Publish** buttons, and the `<ResourceTemplateForm />` that wraps one or more `<PropertyPanel />`.
+The  `<PropertyLabel` as the text, with optional `< 
+components.  
 
-* `<PropertyPanel />` **Component**
+#### `<PropertyPanel />` **Component**
+Every property template in the loaded resource template, an instance of the `<PropertyPanel />` is rendered. 
+Understanding in depth how the `<PropertyPanel />` React component and it's children are constructed best
+illustrates how Sinopia is able to build an editing environment for RDF triples. 
+
+The first line in the `<PropertyPanel />` source code imports two Javascript classes 
+from the React node module. The `PropTypes` import provides a means to check if the
+`<PropertyPanel />`'s **props** are of a certain type. The third line imports the
+`<PropertyPanel />` component.   
+
+```javascript
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import PropertyLabel from './PropertyLabel'
+
+export default class PropertyPanel extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+```
+
+```javascript
+  getCssClasses = () => {
+    let floatClass = 'pull-left'
+
+    if (this.props.float > 0) {
+      if (this.props.float % 0 > 0) {
+        floatClass = 'pull-right'
+      }
+    }
+
+    return `panel panel-property ${floatClass}`
+  }
+
+  render() {
+    return (
+      <div className={this.getCssClasses()}>
+        <div className="panel-heading prop-heading">
+          <PropertyLabel pt={this.props.pt} />
+        </div>
+        <div className="panel-body">
+          {this.props.children}
+        </div>
+      </div>
+    )
+  }
+}
+```
 
 *  `<InputLiteral />`, `<InputListLOC />`, `<InputLookupQA />`, and `<InputLookupSinopia />` **Components**
 The most basic HTML input in Sinopia is part of the `<InputLiteral />` React component. 
