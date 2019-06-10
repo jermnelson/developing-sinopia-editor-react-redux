@@ -17,10 +17,10 @@ a resource's metadata. The outline view also provide a visual hierarchy built on
 user interface tree where parent nodes can be expanded to reveal one or more 
 `<PropertyTypeRow>` children.
 
-* [`<PropertyTemplateOutline>`]()
-  * [`<OutlineHeader>`]()
-  * [`<PropertyTypeRow>`]()
-    * [`<PropertyComponent>`]()
+* [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyPanel.jsx)
+  * [`<OutlineHeader>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/OutlineHeader.jsx)
+  * [`<PropertyTypeRow>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyTypeRow.jsx)
+    * [`<PropertyComponent>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyComponent.jsx)
       * [`<InputLiteral>`]()
       * [`<InputLookupQA>`]()
       * [`<InputListLOC>`]()

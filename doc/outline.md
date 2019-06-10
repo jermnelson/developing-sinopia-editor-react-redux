@@ -347,12 +347,12 @@ a running instance of the Sinopia Server or the sample Resource templates if run
 
 * [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
   * [`<LoginPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/LoginPanel.jsx)
-    * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
-      * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<ImportResourceTemplate />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ImportResourceTemplate.jsx)
-        * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/Header.jsx)
-        * [`<ImportFileZone />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ImportFileZone.jsx)
-        * [`<SinopiaResourceTemplates />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/SinopiaResourceTemplates.jsx)
-    * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
+  * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
+    * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<ImportResourceTemplate />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ImportResourceTemplate.jsx)
+      * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/Header.jsx)
+      * [`<ImportFileZone />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ImportFileZone.jsx)
+      * [`<SinopiaResourceTemplates />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/SinopiaResourceTemplates.jsx)
+  * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
 
 
 ![ImportResourceTemplate React Component and Children](../img/import-resource-templates.png)
@@ -384,26 +384,30 @@ The React component hierarchy is outlined below:
 
 * [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
   * [`<LoginPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/LoginPanel.jsx)
-    * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
-      * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<Editor />`]()
-         * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/Header.jsx)
-         * [`<RDFModal />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/RDFModal.jsx)
-         * [`<GroupChoiceModal />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/GroupChoiceModal.jsx)
-         * [`<ResourceTemplate />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ResourceTemplate.jsx)
-           * [`<ResourceTemplateForm>`](https://github.com/LD4P/sinopia_editor/)
-             * [`<PropertyPanel>`](https://github.com/LD4P/sinopia_editor/)
-               * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/)
-               * [`<InputListLOC>`](https://github.com/LD4P/sinopia_editor/)
-               * [`<InputLookupQA>`](https://github.com/LD4P/sinopia_editor/)
-               * [`<InputLookupSinopia>`]()
-               * [`<PropertyResourceTemplate>`](https://github.com/LD4P/sinopia_editor/)
-                 * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/)
-                   * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/)
-                   * [`<InputListLOC>`](https://github.com/LD4P/sinopia_editor/)
-                   * [`<InputLookupQA>`](https://github.com/LD4P/sinopia_editor/)
+  * [`<Switch />`](https://reacttraining.com/react-router/web/api/Switch)
+    * [`<Route />`](https://reacttraining.com/react-router/web/api/Route) => [`<Editor />`]()
+      * [`<Header />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/Header.jsx)
+      * [`<RDFModal />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/RDFModal.jsx)
+      * [`<GroupChoiceModal />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/GroupChoiceModal.jsx)
+      * [`<ResourceTemplate />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/ResourceTemplate.jsx)
+        * [`<ResourceTemplateForm>`](https://github.com/LD4P/sinopia_editor/)
+          * [`<PropertyPanel>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyPanel.jsx)
+            * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLiteral.jsx)
+            * [`<InputListLOC>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputListLOC.jsx)
+            * [`<InputLookupQA>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLookupQA.jsx)
+            * [`<InputLookupSinopia>`]()
+            * [`<PropertyResourceTemplate>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyResourceTemplate.jsx)
+             * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyTemplateOutline.jsx)
+               * [`<OutlineHeader>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/OutlineHeader.jsx)
+               * [`<PropertyTypeRow>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyTypeRow.js)
+                 * [`<PropertyComponent>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyComponent.jsx)
+                   * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLiteral.jsx)
+                   * [`<InputListLOC>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputListLOC.jsx)
+                   * [`<InputLookupQA>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLookupQA.jsx)
                    * [`<InputLookupSinopia>`]()
-                   * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/)
-    * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
+                 * [`<ResourceProperty>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/ResourceProperty.jsx)
+                   * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyTemplateOutline.jsx)
+  * [`<Footer />`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/Footer.jsx)
          
 
 ![Resource Template Form and Child Components](../img/resource-template.png)
@@ -464,7 +468,7 @@ two columns of `<PropertyPanel />`s.
   }
 ```
 
-Finally, the `<PropertyPanel renders a combination of HTML elements and other React components,
+Finally, the `<PropertyPanel />` renders a combination of HTML elements and other React components,
 including any children stored in the `props for the component instance. The `<PropertyPanel />`
 doesn't need to know or care what the children components are, just that the child React 
 component render some content. 
@@ -488,9 +492,56 @@ component render some content.
 ```
 
 *  `<InputLiteral />` **Components**
-The most basic HTML input in Sinopia is part of the `<InputLiteral />` React component. 
+The most basic HTML input in Sinopia is part of the `<InputLiteral />` React component. Depending
+if the propertyTemplate's repeatable is true, the cataloger can enter multiple values
+that are displayed immediately below the HTML input element. Each of those values can 
+have a language attribute set and the value can be edited by clicking on the Edit
+button. Below is an example of a propertyTemplate literal with mulitple items:
+
+![InputLiteral with one value](../img/input-literal.png)
 
 * `<PropertyTemplateOutline />` **Component** 
+The challenge of representing a resource's properties that include referencing a
+target Resource Template needs to be solved in the user interface when using these
+Profiles. In the Library of Congress BFE, the UI solution was to open a Modal that 
+would render the target Resource Templates propertyTemplates. Those propertyTemplates
+often reference further Resource Resources that require a new pop-up Modal until
+the user loses the context with a whole series of Modals layered on top of one '
+another. 
+
+In an early prototype, Astrid Usong, Sinopia's User Interface designer, came
+up with different approach that instead of using Modals, her design represented these
+relationships as an outline. When demonstrated during a Sinopia-focused pre-conference 
+at the 2019 Code4Lib conference in San Jose, CA., the participants preferred the 
+outline view over the pop-up modal because it was easier to keep the context of the 
+target Resource Template in relation to the original Resource Template when editing
+a resource's metadata. The outline view also provide a visual hierarchy built on familiar
+user interface tree where parent nodes can be expanded to reveal one or more 
+`<PropertyTypeRow>` children.
+
+* [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyPanel.jsx)
+  * [`<OutlineHeader>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/OutlineHeader.jsx)
+  * [`<PropertyTypeRow>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyTypeRow.jsx)
+    * [`<PropertyComponent>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyComponent.jsx)
+      * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLiteral.jsx)
+      * [`<InputLookupQA>`]((https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLookupQA.jsx)
+      * [`<InputListLOC>`]((https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputListLOC.jsx)
+    * [`<ResourceProperty>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/ResourceProperty.jsx)
+      * [`<PropertyActionButtons>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyActionButtons.jsx)
+        * [`<AddButton>`](https://github.com/LD4P/sinopia_editor/blob/fceca915c4001f7aa91f6518bce5c8aaa83086e9/src/components/editor/property/PropertyActionButtons.jsx#L6)
+      * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyPanel.js)    
+
+To support this tree hierarchy of propertyTemplates one or more layers deep; the 
+`<PropertyTemplateOutline>` React component is used and is composed of an `<OutlineHeader>`
+made-up of a collapsed plus-sign icon that when expanded shows any child `<PropertyTypeRow>`
+components. The `<PropertyTypeRow>` contains either `<PropertyComponent>` made up of either
+`<InputLiteral>`, `<InputLookupQA>`, or `<InputListLOC>` , or a `<ResourceComponent>` that 
+has `<PropertyActionButtons>` (containing an `<AddButton>` if the propertyTemplate's repeatable
+property is true) and one or more `<PropertyTemplateOutline>`. When the `<PropertyTypeRow>` with 
+`<ResourceComponent>` is expanded, a network call with the Resource Template ID is made to 
+the Sinopia Server and the Resource Template JSON is retrieved and displayed in the expanded
+view of the Resource with each of the target Resource Template's propertyTemplates having their
+own `<PropertyTemplateOutline>`.
 
 ## Linking to Existing Sinopia Entities and Other Sources
 Sinopia is able to link to other sources through one or more custom [React][REACT] components 
