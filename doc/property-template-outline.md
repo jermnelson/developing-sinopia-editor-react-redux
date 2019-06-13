@@ -21,12 +21,13 @@ user interface tree where parent nodes can be expanded to reveal one or more
   * [`<OutlineHeader>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/OutlineHeader.jsx)
   * [`<PropertyTypeRow>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyTypeRow.jsx)
     * [`<PropertyComponent>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyComponent.jsx)
-      * [`<InputLiteral>`]()
-      * [`<InputLookupQA>`]()
-      * [`<InputListLOC>`]()
-    * [`<ResourceProperty>`]()
-      * [`<PropertyActionButtons>`]()
-      * [`<PropertyTemplateOutline>`]()    
+      * [`<InputLiteral>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLiteral.jsx)
+      * [`<InputLookupQA>`]((https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputLookupQA.jsx)
+      * [`<InputListLOC>`]((https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/InputListLOC.jsx)
+    * [`<ResourceProperty>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/ResourceProperty.jsx)
+      * [`<PropertyActionButtons>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyActionButtons.jsx)
+        * [`<AddButton>`](https://github.com/LD4P/sinopia_editor/blob/fceca915c4001f7aa91f6518bce5c8aaa83086e9/src/components/editor/property/PropertyActionButtons.jsx#L6)
+      * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyPanel.js)  
 
 To support this tree hierarchy of propertyTemplates one or more layers deep; the 
 `<PropertyTemplateOutline>` React component is used and is composed of an `<OutlineHeader>`

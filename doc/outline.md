@@ -4,37 +4,38 @@ Funded by the Adrew W. Mellon Foundation as part of the  LD4P (Linked Data for P
 [Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is an open-source, cloud-based 
 collaborative linked-data cataloging environment that could be used in a production environment. 
 The Sinopia project's primary software development team are members of the Stanford University 
-Libraries with Michelle Futornick the project owner who directs the priorities and communicates 
-the user's needs and requirements to the development team in an iterative manner following 
+Libraries, with Michelle Futornick ,the project owner who directs the priorities and communicates 
+the users needs and requirements to the development team in an iterative manner following 
 [Agile](#AGLE1) software practices.
 
 The Agile development methodology provides an approach and processes for responding to changes in 
 requirements or environment by emphasizing flexibility and adapting to those changes. Specific Agile practices
-of the Stanford development team uses include pair programming, testing, stand-up meetings, planning sessions,
-and sprints. In pair programming two or more developers collaborate together to code or solve specific problems
+of the Stanford development team uses include pair programming, unit and integration testing, 
+stand-up meetings, planning sessions, and sprints. 
+In pair programming two or more developers collaborate together to code or solve specific problems
 by having one programmer type while both developers talk through the problem together thereby increasing code
 comprehension and knowledge transfer within the team. Another critical Agile practice used by the Sinopia 
 development team is creating unit tests for specific Javascript modules and integration tests that test interactions
 between multiple components and modules in the code base through scripting actions in a headless web browser.
 The Sinopia development team also has daily stand-up meetings where the developers check-in with each other and 
 the product owner on progress and challenges encountered in the previous day and to plan for the upcoming day.
-Finally, the Sinopia team organized to one-to-two week sprints that attempted to accomplish a specific goals and
-tasks within the time period that also included a planning meeting at the beginning of the sprint and weekly
+The Sinopia team organized to one-to-two week sprints that attempted to accomplish a specific goals and
+tasks within the time period. Each sprint also included a planning meeting at the beginning of the sprint and weekly
 storytime meeting where challenges and issues that usually required the project owner feedback and decisions 
 that are then incorporated into the sprint execution.  
 
-At the start of the Sinopia project, the decision made by team was to build the linked data editor based on the previous
-development work done by the Library of Congress in the creation of their [BIBFRAME Editor][BFE] or BFE along
+At the start of the Sinopia project, the decision was made by team to build the linked data editor based on the previous
+development work done by the Library of Congress in the creation of their [BIBFRAME Editor][BFE] or BFE, along
 with supporting projects like the [BIBFRAME Profile Editor](https://github.com/lcnetdev/profile-edit) and 
 [Verso](https://github.com/lcnetdev/verso). The Library of Congress catalogers have been using the BFE to 
-cataloging books and other materials for specific workflows related to the Library of Congress infrastructure. 
-Christine Harlow, now at Temple University, created Sinopia's architecture for deploying first a forked 
-version of the Library of Congress BIBFRAME Profile in [Amazon Web Services](https://aws.amazon.com/) (AWS) with
+catalog books and other materials for specific workflows related to the Library of Congress infrastructure. 
+Christine Harlow, now at Temple University, created Sinopia's architecture for deploying first a copy of the 
+of the Library of Congress BIBFRAME Profile, called a fork, in [Amazon Web Services](https://aws.amazon.com/) (AWS) with
 the Linked Data Editor to follow. Because the initial BFE codebase was a monolithic Javascript module and the
-BFE lacked any unit or integration tests, it was decided that a hard fork of the BFE code base for Sinopa Linked 
+BFE lacked any unit or integration tests, it was decided that a fork of the BFE code base for Sinopa Linked 
 Data Editor was necessary in order to address design and implementation shortcomings present in the BFE. In 
 addition, a new backend architecture was necessary that leveraged AWS services like 
-[Cognito](https://aws.amazon.com/cognito/) a user authentication service and to host an instance of 
+[Cognito](https://aws.amazon.com/cognito/), a user authentication service, and to host an instance of 
 [Trellis](https://www.trellisldp.org/), a linked-data platform that allows the use of a Postgres relational 
 database to store the output of the Linked Data Editor.   
 
@@ -50,23 +51,26 @@ Within the programming community, the ubiquity of Javascript as the default prog
 scripting websites and applications means most developers have at least a passing knowledge of the
 language. While client-side manipulation of the HTML DOM (document object model) has changed over the
 years with the introduction of such Javascript libraries as [JQuery][JQUERY] and the continued addition of different
-supported technologies, Javascript has morphed into a server-side language with the emergence of the [Node.js][NODE]
+supporting technologies, Javascript has morphed into a server-side language with the emergence of the [Node.js][NODE]
 ecosystem.
 
-Sinopia uses ECMAScriptfeatures and conventions that is then converted into Javascript using the [Babel][BABEL] 
-compiler. ECMAScript 6 features used in Sinopia include class declarations such  `class Input {...}`, importing of
+Sinopia uses ECMAScript features and conventions that is then converted into Javascript using the [Babel][BABEL] 
+compiler. ECMAScript 6 features used in Sinopia include class declarations such as `class Input {...}`, importing of
 Javascript modules like `import Input from './Input` and to support the import, using the export feature like 
 `export const Input`. Because Sinopia's Linked Data Editor communicates in an asynchronous fashion with the 
-Sinopia server back-end, the ECMAScript 7 and 8 features like Promises with `async` and `await` keywords are used
-in the code. Finally, Sinopia extensively uses the ECMAScript spread operator as well as the arrow function syntax
+Sinopia server backend, the ECMAScript 7 and 8 features like Promises with `async` and `await` keywords are used
+in the code. Finally, Sinopia extensively uses the ECMAScript spread operator, **...** for expanding passed arguments or
+elements to simplify object cloning like this expression `const newState = { ...state }` where newState is a clone of 
+the existing state. Sinopia also adopted the arrow function syntax
 `() => {}` throughout the code base.
 
 Javascript supports multiple programming paradigms like imperative, object-oriented, and 
 in the past ten years, the functional programming approach. The popularity of building functional [React][REACT] 
-and [Redux][REDUX] code for web browser and native user interfaces. Javascript built-in `map` and `reduce` 
-operators along with support for currying and other functional-friendly constructs like the `=>` arrow functional 
-form. The key insight in writing functional Javascript is focusing on functions with minimal side-effects and
-deterministic expectations that given a set of inputs, the function will return a set of outputs.  
+and [Redux][REDUX] code for web browser and native user interfaces has encouraged the use of Javascript built-in 
+`map` and `reduce` operators along with support for currying and other functional-friendly constructs like 
+the `=>` arrow functional form. The key insight in writing functional Javascript is focusing on functions 
+with minimal side-effects and deterministic expectations that given a set of inputs, the function will return a
+ set of outputs.  
 
 For example, a traditional Javascript function is declared using the `function` keyword:
 ```javascript
@@ -94,19 +98,50 @@ and [`reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 developing functional code for React components and Redux reducers. The `map` method returns a new Javascript array with the 
 results of executing a function on every member in the original array. Using the arrow functional form with the `map` 
 method results in simpler implementation code and is fully functional by taking two inputs, the array and an anonymous 
-function defined with the arrow functional form, and returns a new Array. The `reduce` method with the arrow functional
-form applies an anonymous function that reduces the members the array to single member object.
+function defined with the arrow functional form, and returns a new Array. In the example below, starting with an integer
+array, performing a `map` call returns a new Array `firstFiveSquared` with each value of the original Array raised to the 
+second power: 
+
+```javascript
+const firstFive = [1,2,3,4,5]
+
+const firstFiveSquared = firstFive.map(row => row**2)
+
+console.log(firstFiveSquared)
+Array(5) [ 1, 4, 9, 16, 25 ]
+
+```
+
+The `reduce` method with the arrow functional
+form applies an anonymous function that reduces the members of the array to a single member object.
+In Sinopia, the `reduce` function is used in the `inputPropertySelector` function to go through a
+complex JSON hierarchy representing the current values of the React components in the user interface
+and either return the component's items or an empty array based on the values of the component's
+reduxPath. 
+
+```javascript
+const inputPropertySelector = (state, props) => {
+  const reduxPath = props.reduxPath
+  let items = reduxPath.reduce((obj, key) => (obj && obj[key] !== 'undefined' ? obj[key] : undefined), state.selectorReducer)
+
+  if (items === undefined) {
+    items = []
+  }
+
+  return items
+}
+```
 
 ## Resource Templates and Profiles
-The Library of Congress's [Bibframe Editor][BFE] is a BIBFRAME-focused linked-data editor that was an 
-important source of inspiration for Sinopia. To support a wide range of cataloging use cases, the BFE 
+The Library of Congress's [Bibframe Editor][BFE] was an important source of inspiration for Sinopia. 
+To support a wide range of cataloging use cases, the BFE 
 followed a two-part strategy where a user first creates a JSON Profile containing one or more Resource 
-Templates in the BIBFRAME Profile Editor that is saved in the backend Verso server which can then be
-loaded into the BFE to generate different types of user interfaces depending on the requirements for the 
-material. So, for example, a Monograph Profile contains a BIBFRAME Work and Instance Resources
-Templates along with any supporting Resource Templates that a cataloger could then load into the BFE to 
+Templates in the BIBFRAME Profile Editor that is saved in a backend server, running the 
+[Verso](https://github.com/lcnetdev/verso) middleware from
+the Library of Congress, which can then be loaded into the BFE to generate different types of user interfaces depending on the requirements for the material. So, for example, a Monograph Profile contains a BIBFRAME Work and Instance Resources
+Templates along with any supporting Resource Templates that a user could then load into the BFE to 
 catalog a Book Instance or Work. The Profile JSON file containing one or more Resource Templates is in effect
-a Domain Specific Language (DSL) for generating the user interface needed by the cataloger to cataloging 
+a Domain Specific Language (DSL) for generating the user interface needed by the user to cataloging 
 a specific type of BIBFRAME entity. The Profile DSL, while developed for the BIBFRAME ontology, is generic
 enough that other linked-data vocabularies can be used in addition to BIBFRAME but must be specified within 
 a Resource Template. 
@@ -116,7 +151,7 @@ A Resource Template contains a number of properties that define such things as t
 user interface, an URI to use as the RDF type, and one or more properties contained in the `propertyTemplate`
 list. Sinopia, following the BFE's example, only displays one top-level Resource Template at a time in the editor
 user interface. A source of confusion early on in the project arose when analyzing the Library of Congress set of 
-Profiles because the id of a profile was often duplicated as one of the ids of the contained Resource Templates. 
+Profiles as the id of a profile was often duplicated as one of the ids of the contained Resource Templates. 
 This was fixed in later iterations of these Library of Congress Profiles.
 
 
