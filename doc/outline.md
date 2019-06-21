@@ -184,10 +184,20 @@ Templates:
 }
 ```
 
-The source for constructing the actual React components containing the HTML inputs used in the Sinopia Linked Data 
+The source for constructing the actual user interface components used  Sinopia Linked Data 
 Editor are the properties in the `propertyTemplates` list. Each property contains a `propertyURI` attribute 
 that is used as the RDF predicate in the constructed RDF while the `propertyLabel` is displayed in user interface
-either as an HTML label or as a placeholder in the HTML input.
+either as an HTML label or as a placeholder in the HTML input. With the `resourceTemplate:bf2:Note` resource 
+template above, Sinopia's editor generates the following display:
+
+![Title Note Property Panel](../img/title-note.png)
+
+After entering the text, "A great title note", this resource template generates a RDF graph using a relative URI
+as seen here when the user clicks the **Preview RDF** button:
+
+![Preview RDF for Title Note](../img/title-note-rdf-preview.png)
+
+
 Other attributes for the property include *mandatory* set to true if the property is required, 
 *repeatable* if the property can be duplicated. Early In the development of Sinopia, the decision was to limit and 
 simplify what values are supported in the *type* property, with the simplest being `literal` with the others being 
@@ -227,10 +237,10 @@ Template above, `resourceTemplate:bf2:Note` in the *valueConstraint.valueTemplat
 ```
 
 ## React Components
-An open source project sponsored by Facebook, [React][REACT] is a Javascript library that wraps
+An open-source project sponsored by Facebook, [React][REACT] is a Javascript library that wraps
 HTML elements in defined classes and functions for building user interfaces. React classes and functions are often
 defined in an extension of Javascript called JSX that is used to build components that can be assembled into
-larger, more complex user interfaces. For example, a relative simple JSX component could represent a title on a 
+larger, more complex user interfaces. For example, a relatively simple JSX component could represent a title on a 
 page with an HTML H1 tag with valid Javascript expression embedded between curly brackets:
 
 ```javascript
@@ -239,13 +249,13 @@ const title = <h1>Book Title: {title}</h1>
 
 React components also have two important Javascript arrays called `props` and `state`. 
 The `props` array contains read-only properties that can be referenced within the component itself using the
-curly braces syntax and are set when the component is rendered. Because the component's `props` are read-only,
+curly braces syntax and are set when the component is constructed. Because the component's `props` are read-only,
 this enforces the constraint that the `props` are immutable and follow a pure functional form. While creating
 React component in pure functional form is possible, using the ES6 Class syntax allows for more comprehensible 
 code that extends the base `React.Component` class. A React component class must implement a `render` method 
 that returns the desired Javascript.
 
-The title Javascript expression above could be refactor as a simple ES6 Class by extending the `React.Component`
+The title Javascript expression above could be refactored as a simple ES6 Class by extending the `React.Component`
 and return the HTML snippet with the title prop referenced using the `this` keyword indicating a class instance
 variable: 
 
@@ -262,7 +272,7 @@ If coming from object-oriented languages, the temptation might be to create an h
 this pattern is discouraged by the designers of React because React components are intended more for composition, 
 where more complex React components are made-up of simpler components where the enclosing components pass properties
 down through the child's initial props. To illustrate, here is a `Header` Reaction component that 
-contains other React components and like `Title` and an `Author`. 
+contains other React components with the `<Title>` component's `title` prop being set to "Pride and Prejudice".
 
 ```javascript
 class Header extends React.Component {
@@ -276,22 +286,16 @@ class Header extends React.Component {
 }
 ```
 
-This `Header` component could render this output and save to the web browser's DOM like this:
+This `Header` component could render this output to the web browser's DOM like this:
 
 ```html
 <header>
-  <h1>Book Title: Pride and Prejudicer</h1>
+  <h1>Book Title: Pride and Prejudice</h1>
   <p>by Jane Austin</p>
 </header>
 ```
 
 ### Sinopia's React Components
-Initially the intention of the
-Sinopia project team was to extend a LD4P fork of BFE but because of the BFE's 
-Javascript code organization and lack of any unit or integration tests, Sinopia ended up being implemented
-in a more-modern and decomposed manner that allowed for better testing by breaking down the user interface into 
-decomposed and discreet React components.  
-
 
 Sinopia's React components are built as JSX Class Components that are complied into Javascript functions
 using [Babel][BABEL]. To build out the user interface for the Linked Data Editor, Sinopia uses a combination 
@@ -303,23 +307,8 @@ presents a list of links to help and third-party resources displayed in a pane d
 **Help and Resources** link in the navigation bar is clicked. The other function of the `<RootContainter>` component
 is to connect the React user interface to the Redux state store that will be explored in the next section.
 
-The `<OffCanvasBody>` contains another React component from the 
-[react-router-dom](https://reacttraining.com/react-router/) third-party module that allows for the easy generation of
-a single-page application `<BrowserRouter>` [React][REACT] component that matches specific URL patterns into 
-multiple routes for base route `/` to the homepage, the `/editor` route to editor forms, a `/templates` route that
-displays a list of available templates and to upload a new resource template. Other supporting routes include the
-`/login` to allow the user to authenticate using AWS Cogntio, The `/menu` for the off-canvas help and resources 
-page, and a *404* route for unmatched routes entered by the user.   
- 
-* [`<RootContainer>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/RootContainer.jsx)
-  * [`<OffCanvasBody>`](https://www.npmjs.com/package/react-offcanvas#offcanvasbody)
-    * [`<BrowserRouter>`](https://reacttraining.com/react-router/web/api/BrowserRouter)
-      * [`<App>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/App.jsx)
-  * [`<OffCanvasMenu>`](https://www.npmjs.com/package/react-offcanvas#offcanvasmenu)
-    * [`<CanvasMenu>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/CanvasMenu.jsx)
 
-On the Sinopia's homepage, the top level React Components are outlined in the following image when the 
-**Help and Resources** is clicked and the `<OffCanvasMenu />` is displayed:
+
 
 ![Root Container and Off-Canvas React Components](../img/root-container-off-canvas.png)
 
