@@ -1,11 +1,10 @@
 # Introduction
 ## Background of Sinopia
 Funded by the Adrew W. Mellon Foundation as part of the  LD4P (Linked Data for Production) grant,
-[Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA] is an open-source, cloud-based 
+[Sinopia][SINOPIA], available at [https://sinopia.io][SINOPIA], is an open-source, cloud-based 
 collaborative linked-data cataloging environment that could be used in a production environment. 
 The Sinopia project's primary software development team are members of the Stanford University 
-Libraries, with Michelle Futornick ,the project owner who directs the priorities and communicates 
-the users needs and requirements to the development team in an iterative manner following 
+Libraries, with Michelle Futornick as the project owner, prioritizing user needs and requirements in an iterative manner following 
 [Agile](#AGLE1) software practices.
 
 The Agile development methodology provides an approach and processes for responding to changes in 
@@ -13,15 +12,15 @@ requirements or environment by emphasizing flexibility and adapting to those cha
 of the Stanford development team uses include pair programming, unit and integration testing, 
 stand-up meetings, planning sessions, and sprints. 
 In pair programming two or more developers collaborate together to code or solve specific problems
-by having one programmer type while both developers talk through the problem together thereby increasing code
+by having one programmer type while both developers talk through the problem together, thereby increasing code
 comprehension and knowledge transfer within the team. Another critical Agile practice used by the Sinopia 
-development team is creating unit tests for specific Javascript modules and integration tests that test interactions
+development team is creating unit tests for specific Javascript modules in addition to integration tests that test interactions
 between multiple components and modules in the code base through scripting actions in a headless web browser.
 The Sinopia development team also has daily stand-up meetings where the developers check-in with each other and 
-the product owner on progress and challenges encountered in the previous day and to plan for the upcoming day.
-The Sinopia team organized to one-to-two week sprints that attempted to accomplish a specific goals and
-tasks within the time period. Each sprint also included a planning meeting at the beginning of the sprint and weekly
-storytime meeting where challenges and issues that usually required the project owner feedback and decisions 
+the product owner on progress and challenges encountered in the previous day, as well as plan for the upcoming day.
+The Sinopia team is organized in one to two week sprints that attempt to accomplish a specific goals and
+tasks within the sprint. Each sprint also includes a planning meeting at the beginning of the sprint and weekly
+storytime meeting where challenges and issues that often require the project owner's feedback and decisions 
 that are then incorporated into the sprint execution.  
 
 At the start of the Sinopia project, the decision was made by team to build the linked data editor based on the previous
@@ -50,7 +49,7 @@ Data [vocabularies](http://www.getty.edu/research/tools/vocabularies/lod/) and [
 Within the programming community, the ubiquity of Javascript as the default programming language for 
 scripting websites and applications means most developers have at least a passing knowledge of the
 language. While client-side manipulation of the HTML DOM (document object model) has changed over the
-years with the introduction of such Javascript libraries as [JQuery][JQUERY] and the continued addition of different
+years with the introduction of Javascript libraries like [JQuery][JQUERY] and the continued addition of different
 supporting technologies, Javascript has morphed into a server-side language with the emergence of the [Node.js][NODE]
 ecosystem.
 
@@ -58,18 +57,18 @@ Sinopia uses ECMAScript features and conventions that is then converted into Jav
 compiler. ECMAScript 6 features used in Sinopia include class declarations such as `class Input {...}`, importing of
 Javascript modules like `import Input from './Input` and to support the import, using the export feature like 
 `export const Input`. Because Sinopia's Linked Data Editor communicates in an asynchronous fashion with the 
-Sinopia server backend, the ECMAScript 7 and 8 features like Promises with `async` and `await` keywords are used
+Sinopia server backend, the ECMAScript 7 and 8 features (like Promises with `async` and `await` keywords) are used
 in the code. Finally, Sinopia extensively uses the ECMAScript spread operator, **...** for expanding passed arguments or
-elements to simplify object cloning like this expression `const newState = { ...state }` where newState is a clone of 
+elements to simplify object cloning.  An example is this expression: `const newState = { ...state }`, where newState is a clone of 
 the existing state. Sinopia also adopted the arrow function syntax
 `() => {}` throughout the code base.
 
-Javascript supports multiple programming paradigms like imperative, object-oriented, and 
+Javascript supports multiple programming paradigms, such as imperative, object-oriented, and, 
 in the past ten years, the functional programming approach. The popularity of building functional [React][REACT] 
 and [Redux][REDUX] code for web browser and native user interfaces has encouraged the use of Javascript built-in 
-`map` and `reduce` operators along with support for currying and other functional-friendly constructs like 
+`map` and `reduce` operators, along with support for currying and other functional-friendly constructs like 
 the `=>` arrow functional form. The key insight in writing functional Javascript is focusing on functions 
-with minimal side-effects and deterministic expectations that given a set of inputs, the function will return a
+with minimal side-effects and deterministic expectations: that given a set of inputs, the function will always return the same
  set of outputs.  
 
 For example, a traditional Javascript function is declared using the `function` keyword:
@@ -88,7 +87,7 @@ const AddTwo = (x,y) => {
 ``` 
 Both of these `AddTwo` functions are equivalent in that they take two input parameters and return a 
 single value. The `const` keyword for the second is a critical difference in that it creates an immutable 
-function that cannot be reassigned to another function or variable in subsequent code while defining the
+function that cannot be reassigned to another function or variable in subsequent code, while defining the
 `AddTwo` function in the first form can be reassigned without the Babel compiler complaining. The `const`
 keyword reduces the opportunity for accidentally introducing bugs by preventing the developer from
 reassigning the function with potentially harmful or unintentional effects.  
@@ -135,23 +134,24 @@ const inputPropertySelector = (state, props) => {
 ## Resource Templates and Profiles
 The Library of Congress's [Bibframe Editor][BFE] was an important source of inspiration for Sinopia. 
 To support a wide range of cataloging use cases, the BFE 
-followed a two-part strategy where a user first creates a JSON Profile containing one or more Resource 
-Templates in the BIBFRAME Profile Editor that is saved in a backend server, running the 
+followed a two-part strategy.  First, a user creates a JSON Profile containing one or more Resource 
+Templates in the BIBFRAME Profile Editor.  These templates can vary by the material being cataloged
+and are then saved in a backend server, running the 
 [Verso](https://github.com/lcnetdev/verso) middleware from
-the Library of Congress, which can then be loaded into the BFE to generate different types of user interfaces depending on the requirements for the material. So, for example, a Monograph Profile contains a BIBFRAME Work and Instance Resources
+the Library of Congress.  This template is then loaded into the BFE to generate different types of user interfaces depending on the requirements for the material. So, for example, a Monograph Profile contains a BIBFRAME Work and Instance Resources
 Templates along with any supporting Resource Templates that a user could then load into the BFE to 
 catalog a Book Instance or Work. The Profile JSON file containing one or more Resource Templates is in effect
-a Domain Specific Language (DSL) for generating the user interface needed by the user to cataloging 
+a Domain Specific Language (DSL) for generating the user interface needed by the user to catalog 
 a specific type of BIBFRAME entity. The Profile DSL, while developed for the BIBFRAME ontology, is generic
-enough that other linked-data vocabularies can be used in addition to BIBFRAME but must be specified within 
+enough that other linked-data vocabularies can be used in addition to BIBFRAME, though they must be specified within 
 a Resource Template. 
  
 
-A Resource Template contains a number of properties that define such things as the label to display in the
+A Resource Template contains a number of properties that define properties such as the label to display in the
 user interface, an URI to use as the RDF type, and one or more properties contained in the `propertyTemplate`
 list. Sinopia, following the BFE's example, only displays one top-level Resource Template at a time in the editor
 user interface. A source of confusion early on in the project arose when analyzing the Library of Congress set of 
-Profiles as the id of a profile was often duplicated as one of the ids of the contained Resource Templates. 
+Profiles, as the id of a profile was often duplicated as one of the ids of the contained Resource Templates. 
 This was fixed in later iterations of these Library of Congress Profiles.
 
 
@@ -184,7 +184,7 @@ Templates:
 }
 ```
 
-The source for constructing the actual user interface components used  Sinopia Linked Data 
+The source for constructing the actual user interface components used by the Sinopia Linked Data 
 Editor are the properties in the `propertyTemplates` list. Each property contains a `propertyURI` attribute 
 that is used as the RDF predicate in the constructed RDF while the `propertyLabel` is displayed in user interface
 either as an HTML label or as a placeholder in the HTML input. With the `resourceTemplate:bf2:Note` resource 
@@ -193,18 +193,18 @@ template above, Sinopia's editor generates the following display:
 ![Title Note Property Panel](../img/title-note.png)
 
 After entering the text, "A great title note", this resource template generates a RDF graph using a relative URI
-as seen here when the user clicks the **Preview RDF** button:
+as seen here (when the user clicks the **Preview RDF** button):
 
 ![Preview RDF for Title Note](../img/title-note-rdf-preview.png)
 
 
-Other attributes for the property include *mandatory* set to true if the property is required, 
-*repeatable* if the property can be duplicated. Early In the development of Sinopia, the decision was to limit and 
-simplify what values are supported in the *type* property, with the simplest being `literal` with the others being 
+Other attributes for the property include *mandatory* set to true if the property is required, and
+*repeatable* if the property can be duplicated. Early in the development of Sinopia, the decision was to limit and 
+simplify what values are supported in the *type* property, with the simplest being `literal`, and the others being 
 `lookup`, `list`, and `resource`.
 The `literal` property are for string values that are entered by the user, while the `list` and `lookup` types
 references typeahead components for searching and linking external entities and values in the user interface. The 
-*valueConstraint* attribute contains a number of sub-attributes like *defaults*, as list of one or more values that
+*valueConstraint* attribute contains a number of sub-attributes like *defaults*, as a list of one or more values that
 are used to pre-populate the values in the input fields.   
 
 The `resource` type is more complicated in that it references another Resource Template through the 
@@ -268,7 +268,7 @@ class Title extends React.Component {
 }
 ```
 
-If coming from object-oriented languages, the temptation might be to create an hierarchy of React components but
+If coming from object-oriented languages, the temptation might be to create a hierarchy of React components, but
 this pattern is discouraged by the designers of React because React components are intended more for composition, 
 where more complex React components are made-up of simpler components where the enclosing components pass properties
 down through the child's initial props. To illustrate, here is a `Header` Reaction component that 
@@ -453,7 +453,7 @@ The  `<PropertyLabel/>` component provides the text in the panel's header with o
 using such components as the `<RequiredSuperscript />` to display a red asterisk for a required `<PropertyPanel />`.  
 
 #### `<PropertyPanel />` **Component**
-Every property template in the loaded resource template, an instance of the `<PropertyPanel />` is rendered. 
+For every property template in the loaded resource template, an instance of the `<PropertyPanel />` is rendered. 
 Understanding in depth how the `<PropertyPanel />` React component and it's children are constructed best
 illustrates how Sinopia is able to build an editing environment for RDF triples. 
 
@@ -493,13 +493,12 @@ two columns of `<PropertyPanel />`s.
 ```
 
 Finally, the `<PropertyPanel />` renders a combination of HTML elements and other React components,
-including any children stored in the `props for the component instance. The `<PropertyPanel />`
+including any children stored in the `props` for the component instance. The `<PropertyPanel />`
 doesn't need to know or care what the children components are, just that the child React 
 component render some content. 
 
 
 ```javascript
-
   render() {
     return (
       <div className={this.getCssClasses()}>
@@ -517,7 +516,7 @@ component render some content.
 
 *  `<InputLiteral />` **Components**
 The most basic HTML input in Sinopia is part of the `<InputLiteral />` React component. Depending
-if the propertyTemplate's repeatable is true, the cataloger can enter multiple values
+on if the propertyTemplate's repeatable is true, the cataloger can enter multiple values
 that are displayed immediately below the HTML input element. Each of those values can 
 have a language attribute set and the value can be edited by clicking on the Edit
 button. Below is an example of a propertyTemplate literal with mulitple items:
@@ -530,11 +529,11 @@ target Resource Template needs to be solved in the user interface when using the
 Profiles. In the Library of Congress BFE, the UI solution was to open a Modal that 
 would render the target Resource Templates propertyTemplates. Those propertyTemplates
 often reference further Resource Resources that require a new pop-up Modal until
-the user loses the context with a whole series of Modals layered on top of one '
+the user loses the context with a whole series of Modals layered on top of one
 another. 
 
-In an early prototype, Astrid Usong, Sinopia's User Interface designer, came
-up with different approach that instead of using Modals, her design represented these
+In an early prototype, Astrid Usong, Sinopia's User Interface designer at Stanford Libraries, came
+up with different approach.  Instead of using Modals, her design represented these
 relationships as an outline. When demonstrated during a Sinopia-focused pre-conference 
 at the 2019 Code4Lib conference in San Jose, CA., the participants preferred the 
 outline view over the pop-up modal because it was easier to keep the context of the 
@@ -555,7 +554,7 @@ user interface tree where parent nodes can be expanded to reveal one or more
         * [`<AddButton>`](https://github.com/LD4P/sinopia_editor/blob/fceca915c4001f7aa91f6518bce5c8aaa83086e9/src/components/editor/property/PropertyActionButtons.jsx#L6)
       * [`<PropertyTemplateOutline>`](https://github.com/LD4P/sinopia_editor/blob/master/src/components/editor/property/PropertyPanel.js)    
 
-To support this tree hierarchy of propertyTemplates one or more layers deep; the 
+To support this tree hierarchy of propertyTemplates one or more layers deep, the 
 `<PropertyTemplateOutline>` React component is used and is composed of an `<OutlineHeader>`
 made-up of a collapsed plus-sign icon that when expanded shows any child `<PropertyTypeRow>`
 components. The `<PropertyTypeRow>` contains either `<PropertyComponent>` made up of either
@@ -564,7 +563,7 @@ has `<PropertyActionButtons>` (containing an `<AddButton>` if the propertyTempla
 property is true) and one or more `<PropertyTemplateOutline>`. When the `<PropertyTypeRow>` with 
 `<ResourceComponent>` is expanded, a network call with the Resource Template ID is made to 
 the Sinopia Server and the Resource Template JSON is retrieved and displayed in the expanded
-view of the Resource with each of the target Resource Template's propertyTemplates having their
+view of the Resource, with each of the target Resource Template's propertyTemplates having their
 own `<PropertyTemplateOutline>`.
 
 ## Linking to Existing Sinopia Entities and Other Sources
@@ -576,7 +575,7 @@ that provide a typeahead input using a third party node.js module called
 ### `<InputListLOC>` Library of Congress **id.loc.gov** Component
 The Library of Congress's Linked Data Service at [http://id.loc.gov](http://id.loc.gov/) provides a number
 of subjects, thesauri, classifications, and other vocabularies. For large linked data services 
-Sinopia uses Questioning Authorities service but for smaller vocabularies the `InputListLOC` React
+Sinopia uses Questioning Authorities service, but for smaller vocabularies the `InputListLOC` React
 component directly connects and retrieves a JSON list that is presented to the end user as a 
 lookahead provided by the 'react-bootstrap-typeahead'](#RBT) module. These linked data vocabularies
 are pulled from a JSON configuration object that is shared with the `<InputLookupQA>` and 
@@ -587,14 +586,14 @@ Here is a screen shot of the `InputListLOC` component within Sinopia:
 ![Typeahead result from the InputListLOC component in Sinopia](../img/input-list-loc.png)
 
 The URI and label is saved in the `<InputListLOC>` props with the URI becoming an RDF object of
-the entity as the RDF subject and the propertyTemplate's proeprtyURI being the predicate.
+the entity as the RDF subject and the propertyTemplate's proeprtyURI as the RDF predicate.
 
 ### `<InputLookupQA>` Questioning Authorities Component
-From the beginning, Sinopia project team includes close collaboration with Cornell University's 
-Huda Khan working on the React components to support search the Questioning Authorities (QA) service
-run as a collaborative effort with Lynette Randell and David Echeman at the University of Iowa
-School of Information Science. The QA is a cache built with Solr and 
-the Fusuki triplestore is managed by an Question Authority API endpoint using a Swagger API
+From the beginning, the Sinopia project team included close collaboration with Huda Kahn of Cornell University 
+who is working on the React components to support searching the Questioning Authorities (QA) service.
+QA is run as a collaborative effort with Lynette Randell and David Echeman at the University of Iowa School
+of Information Science. The QA service has a cache built with Solr and 
+the Fusuki triplestore, with a Swagger API endpoint integrating
 with Sinopia's `<InputLookupQA>` component. 
   
 ![Typeahead result from using the InputLookupQA component in Sinopia](../img/input-lookup-qa.png)
@@ -668,8 +667,8 @@ methods, `mapStateToProps` and `mapDispatchToProps` as recommended in the offici
 [documentation](#redux-ref-01). 
 
 ### RDF Generation and the Sinopia Server
-As the Redux state captures the event of a user entering or linking data to when it happens in the 
-React components, at any particular point-in-time Sinopia can generates RDF. From the previous 
+As the Redux state captures the event of a user entering or linking data in the 
+React components, Sinopia can generates RDF at any particular point-in-time on demand. From the previous 
 Redux example, clicking on the **Previw RDF** uses a Redux reducer to create an instance of
 the RDF `GraphBuilder` class and generate the following RDF graph that can then be saved and published
 through the backend Sinopia Server:  
@@ -684,19 +683,19 @@ _:b1 <http://www.w3.org/2000/01/rdf-schema#label> "Many editions, adaptations, a
 ```
 
 ## Next Steps
-The Sinopia Linked Data Editor targeted Minimal Viable Product release is at the end of July 2019. This
+The Sinopia Linked Data Editor's targeted Minimal Viable Product release is at the end of July 2019. This
 release will allow the Sinopia Cohorts to start cataloging using the Linked Data Editor and provide valuable
 sources of requirements, pulled from their usage and experiences, to help the Sinopia team learn and plan 
 for the next work-cycle. As the Sinopia user and developer community expands beyond the Stanford and Cornell
-development teams, Sinopia's as a cataloging tool built as a generic cataloging editor for Linked Data, is
+development teams, Sinopia's use as a generic cataloging editor for Linked Data is
 a strong base to extend and expand into the future. Currently Sinopia has three linking sources, the Library 
 of Congress, the Questioning Authorities, and internally created entities. In the next work cycle, Sinopia
 may build out a new component, `<InputLookupWikidata />`, for linking and direct integration with Wikidata.
 
 An early requirement of Sinopia is to provide the ability of catalogers to do two different, but related, workflows.
-For pre-existing graphs of RDF entities either available from third party authorities like 
-Library of Congress, VIAF, or ShareVDE or from internally created entities stored in Sinopia's server, catalogers
-will need to be able either edit, add, or delete triples about these entities or derive a new RDF entity by copying
+For pre-existing graphs of RDF entities (either available from third party authorities like 
+Library of Congress, VIAF, or ShareVDE or from internally created entities stored in Sinopia's server), catalogers
+will need to be able to edit, add, or delete triples about these entities or derive a new RDF entity by copying
 those triples, much like the copy-cataloging current MARC based work-flows in libraries.
 
 Finally, to encourage and broaden adoption of Sinopia beyond AWS specific services, a new Sinopia Server 
