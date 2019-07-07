@@ -466,30 +466,15 @@ from the React node module. The `PropTypes` import provides a means to check if 
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import PropertyLabel from './PropertyLabel'
-
-export default class PropertyPanel extends Component {
-  constructor(props) {
-    super(props)
-  }
-
 ```
 
-The `getCssClasses` is a simple class that set's the panel div's Bootstrap floating class to create 
-two columns of `<PropertyPanel />`s.
-
-
 ```javascript
-  getCssClasses = () => {
-    let floatClass = 'pull-left'
+const PropertyPanel = (props) => {
+  const floatClass = props.float > 0 && props.float % 0 > 0 ? 'pull-right' : 'pull-left'
+  const cssClasses = `panel panel-property ${floatClass}`
 
-    if (this.props.float > 0) {
-      if (this.props.float % 0 > 0) {
-        floatClass = 'pull-right'
-      }
-    }
+}
 
-    return `panel panel-property ${floatClass}`
-  }
 ```
 
 Finally, the `<PropertyPanel />` renders a combination of HTML elements and other React components,
@@ -499,19 +484,16 @@ component render some content.
 
 
 ```javascript
-
-  render() {
-    return (
-      <div className={this.getCssClasses()}>
-        <div className="panel-heading prop-heading">
-          <PropertyLabel pt={this.props.pt} />
-        </div>
-        <div className="panel-body">
-          {this.props.children}
-        </div>
+  return (
+    <div className={ cssClasses } data-label={ props.pt.propertyLabel }>
+      <div className="panel-heading prop-heading">
+        <PropertyLabel pt={ props.pt } />
       </div>
-    )
-  }
+      <div className="panel-body">
+        { props.children }
+      </div>
+    </div>
+  )
 }
 ```
 
